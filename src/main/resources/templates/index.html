@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title th:text="${titulo}"></title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"></link>
 </head>
 <body>
-    <h2 th:text="${mensajeBienvenida}"></h2>
-
+    <h2 class="stilo-menu" th:text="${mensajeBienvenida}"></h2>
+    <br>
+    <img th:src="@{/images/spring.png}" />
 </body>
 </html>
