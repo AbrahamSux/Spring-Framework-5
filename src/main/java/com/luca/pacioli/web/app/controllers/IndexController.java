@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.luca.pacioli.web.app.models.Usuario;
@@ -79,13 +80,7 @@ public class IndexController {
 	public String listar(Model model) {
 		LOGGER.info(">>> listar()");
 		
-		List<Usuario> usuarios = new ArrayList<>();
-		usuarios = getLista();
-		
-		LOGGER.info("Datos Establecidos: {}", ((usuarios != null) ? usuarios.toString() : "NULL") );
-		
 		model.addAttribute("encabezado", "Lista de Usuarios");
-		model.addAttribute("users", usuarios);
 		
 		return "listar";
 	}
@@ -107,6 +102,22 @@ public class IndexController {
 		users.add(new Usuario("José", "Madero", "jose.madero@hotmail.com"));
 		
 		return users;
+	}
+	
+	/**
+	 * Método auxiliar utilizado para retornar una lista de usuarios a cualquier método
+	 * del controlador Index.
+	 * 
+	 * @return lista de Usuarios.
+	 */
+	@ModelAttribute("users")
+	public List<Usuario> obtenerUsuarios() {
+		List<Usuario> usuarios = new ArrayList<>();
+		usuarios = getLista();
+		
+		LOGGER.info("Datos Establecidos: {}", ((usuarios != null) ? usuarios.toString() : "NULL") );
+		
+		return usuarios;
 	}
 
 }

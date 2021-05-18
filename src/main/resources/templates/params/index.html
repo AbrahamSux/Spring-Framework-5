@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Params</title>
+</head>
+<body>
+
+    <h2 th:text="${encabezado}"></h2>
+
+    <li>
+        <a th:href="@{/params/string(text='Abraham Juárez')}">/params/string?text=Abraham</a>
+    </li>
+    <li>
+        <a th:href="@{/params/string(text='Diana Camarillo')}">/params/string?text=Diana</a>
+    </li>
+
+</body>
+</html>
