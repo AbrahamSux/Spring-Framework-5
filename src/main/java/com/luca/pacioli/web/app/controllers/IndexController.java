@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @description Clase Controladora para la página de inicio de la aplicación.
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @version 0.1
  */
 @Controller
+@RequestMapping("/facturacion")
 public class IndexController {
 	
 	/**
@@ -39,7 +41,7 @@ public class IndexController {
 		LOGGER.info(">>> index()");
 		
 		model.addAttribute("titulo", "Home");
-		model.addAttribute("mensajeBienvenida", "Bienvenido al Sistema de Facturación");
+		model.addAttribute("mensajeBienvenida", "¡Bienvenido al Sistema de Facturación!");
 		
 		return "index";
 	}
