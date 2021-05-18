@@ -7,6 +7,7 @@ package com.luca.pacioli.web.app.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -34,8 +35,11 @@ public class IndexController {
 	 * @return view
 	 */
 	@GetMapping({"/index", "/", "/home"})
-	public String index() {
+	public String index(Model model) {
 		LOGGER.info(">>> index()");
+		
+		model.addAttribute("titulo", "Home");
+		model.addAttribute("mensajeBienvenida", "Bienvenido al Sistema de Facturación");
 		
 		return "index";
 	}

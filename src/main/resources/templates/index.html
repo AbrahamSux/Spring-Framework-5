@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Home</title>
+<title th:text="${titulo}"></title>
 </head>
 <body>
-    <h2>Bienvenido al Sistema de Facturación</h2>
+    <h2 th:text="${mensajeBienvenida}"></h2>
 
 </body>
 </html>
