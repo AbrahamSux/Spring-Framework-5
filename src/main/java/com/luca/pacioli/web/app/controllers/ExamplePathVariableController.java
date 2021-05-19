@@ -6,6 +6,7 @@ package com.luca.pacioli.web.app.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ import java.math.BigInteger;
  *
  * @author Abraham Juárez de la Cruz - ajuarezdelacruz93@gmail.com
  * @creationDate 18/05/2021 13:30:00 hrs.
- * @version 0.1
+ * @version 0.2
  */
 @Controller
 @RequestMapping("/path")
@@ -30,6 +31,16 @@ public class ExamplePathVariableController {
      * Utilizada para manipular los mensajes informativos y de error.
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(ExamplePathVariableController.class);
+
+
+    @Value("${controller.variables.encabezado.index}")
+    private String encabezadoIndex;
+
+    @Value("${controller.variables.encabezado.variable}")
+    private String encabezadoVariable;
+
+    @Value("${controller.variables.encabezado.variables}")
+    private String encabezadoVariables;
 
 
 
@@ -44,7 +55,7 @@ public class ExamplePathVariableController {
     public String index(ModelMap mm) {
         LOGGER.info(">>> index()");
 
-        mm.addAttribute("encabezado", "Envío de Parámetros por @PathVariable");
+        mm.addAttribute("encabezado", encabezadoIndex);
 
         return "variables/index";
     }
@@ -63,7 +74,7 @@ public class ExamplePathVariableController {
         // SE ESTABLECE LA VISTA A DIRECCIONAR.
         mv.setViewName("variables/mostrar");
 
-        mv.addObject("encabezado", "Recibir Parámetros de la ruta @PathVariable");
+        mv.addObject("encabezado", encabezadoVariable);
         mv.addObject("user", "El Nombre de Usuario recibido fue: " + nombreUsuario);
 
         return mv;
@@ -85,7 +96,7 @@ public class ExamplePathVariableController {
         // SE ESTABLECE LA VISTA A DIRECCIONAR.
         mv.setViewName("variables/mostrar");
 
-        mv.addObject("encabezado", "Recibir Parámetros de la ruta @PathVariable");
+        mv.addObject("encabezado", encabezadoVariables);
         mv.addObject("user", "El número de telefono del usuario '"
                 + nombreUsuario +"' es: " + numero );
 

@@ -6,6 +6,7 @@ package com.luca.pacioli.web.app.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ import java.math.BigInteger;
  *
  * @author Abraham Juárez de la Cruz - ajuarezdelacruz93@gmail.com
  * @creationDate 18/05/2021 09:58:00 hrs.
- * @version 0.2
+ * @version 0.3
  */
 @Controller
 @RequestMapping("/params")
@@ -31,6 +32,19 @@ public class ExampleParamsController {
      * Utilizada para manipular los mensajes informativos y de error.
      */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExampleParamsController.class);
+
+
+	@Value("${controller.params.encabezado.index}")
+	private String encabezadoIndex;
+
+	@Value("${controller.params.encabezado.value.param}")
+	private String encabezadoValueParam;
+
+	@Value("${controller.params.encabezado.mix.params}")
+	private String encabezadoMixParams;
+
+	@Value("${controller.params.encabezado.request.params}")
+	private String encabezadoRequestParams;
 	
 	
 	
@@ -45,7 +59,7 @@ public class ExampleParamsController {
 	public String index(ModelMap mm) {
 		LOGGER.info(">>> index()");
 
-		mm.addAttribute("encabezado", "Envío de Parámetros por Request HTTP GET - URL");
+		mm.addAttribute("encabezado", encabezadoIndex);
 
 		return "params/index";
 	}
@@ -64,7 +78,7 @@ public class ExampleParamsController {
 		// SE ESTABLECE LA VISTA A DIRECCIONAR.
 		mv.setViewName("params/mostrar");
 
-		mv.addObject("encabezado", "Parámetro Recibido del Request HTTP GET - URL");
+		mv.addObject("encabezado", encabezadoValueParam);
 		mv.addObject("argument", "El valor recibido fue: " + texto);
 		
 		return mv;
@@ -87,7 +101,7 @@ public class ExampleParamsController {
 		// SE ESTABLECE LA VISTA A DIRECCIONAR.
 		mv.setViewName("params/mostrar");
 
-		mv.addObject("encabezado", "Parámetro Recibido del Request HTTP GET - URL");
+		mv.addObject("encabezado", encabezadoMixParams);
 		mv.addObject("argument", "El número de teléfono de '" + nombre + "' es : " + numero);
 
 		return mv;
@@ -107,7 +121,7 @@ public class ExampleParamsController {
 		// SE ESTABLECE LA VISTA A DIRECCIONAR.
 		mv.setViewName("params/mostrar");
 
-		mv.addObject("encabezado", "Parámetro Recibido del Request HTTP GET - URL");
+		mv.addObject("encabezado", encabezadoRequestParams);
 		mv.addObject("argument", "El número de teléfono de '"
 				+ request.getParameter("name") + "' es : "
 				+ ((request.getParameter("number").isEmpty()) ? "0" : request.getParameter("number")) );

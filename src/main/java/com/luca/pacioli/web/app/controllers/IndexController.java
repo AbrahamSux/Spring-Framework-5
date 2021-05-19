@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ import com.luca.pacioli.web.app.models.Usuario;
  *
  * @author Abraham Juárez de la Cruz - ajuarezdelacruz93@gmail.com
  * @creationDate 17/05/2021 19:34:00 hrs.
- * @version 0.5
+ * @version 0.6
  */
 @Controller
 @RequestMapping("/facturacion")
@@ -32,6 +33,16 @@ public class IndexController {
      * Utilizada para manipular los mensajes informativos y de error.
      */
 	private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
+
+
+	@Value("${controller.index.titulo.bienvenida}")
+	private String tituloBienvenida;
+
+	@Value("${controller.index.titulo.perfil.user}")
+	private String tituloPerfil;
+
+	@Value("${controller.index.titulo.lista.users}")
+	private String tituloLista;
 	
 	
 	
@@ -47,7 +58,7 @@ public class IndexController {
 		LOGGER.info(">>> index()");
 		
 		model.addAttribute("titulo", "Home");
-		model.addAttribute("mensajeBienvenida", "¡Bienvenido al Sistema de Facturación!");
+		model.addAttribute("mensajeBienvenida", tituloBienvenida);
 		
 		return "index";
 	}
@@ -63,7 +74,7 @@ public class IndexController {
 		
 		Usuario usuario = new Usuario("Ernesto", "Juárez", "ernesto.juarez@gmail.com");
 		
-		model.addAttribute("encabezado", "Perfil del Usuario: ".concat(usuario.getNombre()));
+		model.addAttribute("encabezado", tituloPerfil.concat(usuario.getNombre()));
 		model.addAttribute("user", usuario);
 		
 		LOGGER.info("Datos Establecidos: {}", ((usuario != null) ? usuario.toString() : "NULL") );
@@ -80,7 +91,7 @@ public class IndexController {
 	public String listar(Model model) {
 		LOGGER.info(">>> listar()");
 		
-		model.addAttribute("encabezado", "Lista de Usuarios");
+		model.addAttribute("encabezado", tituloLista);
 		
 		return "listar";
 	}
