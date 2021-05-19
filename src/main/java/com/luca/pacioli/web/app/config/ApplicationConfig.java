@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author Abraham Juárez de la Cruz - ajuarezdelacruz93@gmail.com
  * @creationDate 19/05/2021 12:51:00 hrs.
- * @version 0.1
+ * @version 0.3
  */
 @Configuration
 public class ApplicationConfig {
@@ -30,11 +30,22 @@ public class ApplicationConfig {
     }
 
     @Bean("itemsFacturaLenovo")
-    public List<ItemFactura> itemsFactura() {
+    public List<ItemFactura> facturaLenovo() {
         List<ItemFactura> items = Arrays.asList(
                 new ItemFactura(new Producto("Laptop Lenovo", 35000.99), 1),
                 new ItemFactura(new Producto("Impresora Lenovo", 4680.99), 1),
                 new ItemFactura(new Producto("Mouse Lenovo", 250.00), 2)
+        );
+
+        return items;
+    }
+
+    @Bean("itemsFacturaHuawei")
+    public List<ItemFactura> facturaHuawei() {
+        List<ItemFactura> items = Arrays.asList(
+                new ItemFactura(new Producto("Monitor Huawei", 3999.99), 1),
+                new ItemFactura(new Producto("Audifonos Huawei", 800.00), 2),
+                new ItemFactura(new Producto("Cargador-Celular Huawei", 450.00), 1)
         );
 
         return items;

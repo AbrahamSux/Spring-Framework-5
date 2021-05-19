@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author Abraham Juárez de la Cruz - ajuarezdelacruz93@gmail.com
  * @creationDate 19/05/2021 14:24:00 hrs.
- * @version 0.1
+ * @version 0.2
  */
 @Component
 public class Factura {
@@ -28,7 +28,7 @@ public class Factura {
     private Cliente cliente;
 
     @Autowired
-    @Qualifier("itemsFacturaLenovo")
+    @Qualifier("itemsFacturaHuawei")
     private List<ItemFactura> items;
 
     public String getDescripcion() {

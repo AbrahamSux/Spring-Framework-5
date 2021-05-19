@@ -26,7 +26,7 @@
             <td th:text="${fac.producto.nombreProducto}"></td>
             <td th:text="${fac.producto.precioProducto}"></td>
             <td th:text="${fac.cantidad}"></td>
-            <td th:text="${fac.producto.precioProducto * fac.cantidad}"></td>
+            <td th:text="${fac.getImporte()}"></td>
         </tr>
         </tbody>
     </table>
