@@ -4,10 +4,15 @@
  */
 package com.luca.pacioli.web.app.config;
 
+import com.luca.pacioli.web.app.models.ItemFactura;
+import com.luca.pacioli.web.app.models.Producto;
 import com.luca.pacioli.web.app.services.NuevoService;
 import com.luca.pacioli.web.app.services.impl.NuevoServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @description Clase de configuración para Beans no mapeados por anotaciones.
@@ -22,6 +27,17 @@ public class ApplicationConfig {
     @Bean("nuevoService")
     public NuevoService nuevoService() {
         return new NuevoServiceImpl();
+    }
+
+    @Bean("itemsFacturaLenovo")
+    public List<ItemFactura> itemsFactura() {
+        List<ItemFactura> items = Arrays.asList(
+                new ItemFactura(new Producto("Laptop Lenovo", 35000.99), 1),
+                new ItemFactura(new Producto("Impresora Lenovo", 4680.99), 1),
+                new ItemFactura(new Producto("Mouse Lenovo", 250.00), 2)
+        );
+
+        return items;
     }
 
 }
