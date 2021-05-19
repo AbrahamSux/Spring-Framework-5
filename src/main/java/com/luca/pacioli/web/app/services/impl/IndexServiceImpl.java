@@ -32,14 +32,14 @@ public class IndexServiceImpl implements IndexService {
     public String testMessage() {
         LOGGER.info(">>> testMessage() ");
 
-        return "Mensaje enviado desde el metodo testMessage() de IndexService...";
+        return "Mensaje enviado desde el metodo testMessage() de IndexServiceImpl...";
     }
 
     @Override
     public String testMessage(String text) {
         LOGGER.info(">>> testMessage( " + text + " ) ");
 
-        return text.concat(" desde el metodo testMessage() de IndexService...");
+        return text.concat(" desde el metodo testMessage() de IndexServiceImpl...");
     }
 
 }
