@@ -8,6 +8,7 @@ import com.luca.pacioli.web.app.services.IndexService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  *
  * @author Abraham Juárez de la Cruz - ajuarezdelacruz93@gmail.com
  * @creationDate 19/05/2021 10:16:00 hrs.
- * @version 0.1
+ * @version 0.2
  */
 @Controller
 public class IndexController {
@@ -32,6 +33,7 @@ public class IndexController {
      * Referencia al Service {@link IndexService}
      */
     @Autowired
+    @Qualifier("indexService")
     private IndexService indexService;
 
 
@@ -47,7 +49,8 @@ public class IndexController {
     public String index(Model model) {
         LOGGER.info(">>> index() ");
 
-        model.addAttribute("object", indexService.testMessage() );
+        //model.addAttribute("object", indexService.testMessage() );
+        model.addAttribute("object", indexService.testMessage("Texto enviado"));
 
         return "index";
     }

@@ -9,7 +9,7 @@ package com.luca.pacioli.web.app.services;
  *
  * @author Abraham Juárez de la Cruz - ajuarezdelacruz93@gmail.com
  * @creationDate 19/05/2021 11:10:00 hrs.
- * @version 0.1
+ * @version 0.2
  */
 public interface IndexService {
 
@@ -19,5 +19,13 @@ public interface IndexService {
      * @return Mensaje.
      */
     public String testMessage();
+
+    /**
+     * Método utilizado para mostrar un mensaje de prueba.
+     *
+     * @param text Mensaje.
+     * @return Mensaje armado.
+     */
+    public String testMessage(String text);
 
 }

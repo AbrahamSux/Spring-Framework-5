@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Abraham Juárez de la Cruz - ajuarezdelacruz93@gmail.com
  * @creationDate 19/05/2021 12:17:00 hrs.
- * @version 0.1
+ * @version 0.2
  */
 @Service("complejoService")
 @Primary
@@ -32,9 +32,16 @@ public class ComplejoServiceImpl implements IndexService {
 
     @Override
     public String testMessage() {
-        LOGGER.info(">>> test() ");
+        LOGGER.info(">>> testMessage() ");
 
-        return "Mensaje enviado desde el metodo test() de ComplejoServiceImpl...";
+        return "Mensaje enviado desde el metodo testMessage() de ComplejoServiceImpl...";
+    }
+
+    @Override
+    public String testMessage(String text) {
+        LOGGER.info(">>> testMessage( " + text + " ) ");
+
+        return text.concat(" desde el metodo testMessage() de ComplejoServiceImpl...");
     }
 
 }

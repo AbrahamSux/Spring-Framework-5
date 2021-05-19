@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Abraham Juárez de la Cruz - ajuarezdelacruz93@gmail.com
  * @creationDate 19/05/2021 10:23:00 hrs.
- * @version 0.1
+ * @version 0.3
  */
 @Service("indexService")
 public class IndexServiceImpl implements IndexService {
@@ -30,9 +30,16 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public String testMessage() {
-        LOGGER.info(">>> test() ");
+        LOGGER.info(">>> testMessage() ");
 
-        return "Mensaje enviado desde el metodo test() de IndexService...";
+        return "Mensaje enviado desde el metodo testMessage() de IndexService...";
+    }
+
+    @Override
+    public String testMessage(String text) {
+        LOGGER.info(">>> testMessage( " + text + " ) ");
+
+        return text.concat(" desde el metodo testMessage() de IndexService...");
     }
 
 }
