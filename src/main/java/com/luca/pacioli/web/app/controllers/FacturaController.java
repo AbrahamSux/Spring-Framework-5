@@ -10,12 +10,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 /**
  * @description Clase Controladora para la Factura.
  *
  * @author Abraham Juárez de la Cruz - ajuarezdelacruz93@gmail.com
  * @creationDate 19/05/2021 16:01:00 hrs.
- * @version 0.2
+ * @version 0.3
  */
 @Controller
 @RequestMapping("/factura")
@@ -48,4 +51,25 @@ public class FacturaController {
 
         return "factura/mostrar";
     }
+
+
+
+    // METODOS PRIVADOS
+
+    /**
+     * Método utilizado para inicializar valores una vez se levante el contexto de la WebApp.
+     */
+    @PostConstruct
+    private void inicializar() {
+        titulo = titulo.concat(" ").concat("Huawei");
+    }
+
+    /**
+     * Método utilizado para realizar alguna acción una vez termine la ejecución de la WebApp.
+     */
+    @PreDestroy
+    private void destruir() {
+        System.out.println("=====WebApp de Facturacion Finalizada.");
+    }
+
 }

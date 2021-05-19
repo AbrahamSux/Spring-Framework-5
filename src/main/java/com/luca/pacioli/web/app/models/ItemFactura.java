@@ -26,10 +26,6 @@ public class ItemFactura {
         this.cantidad = cantidad;
     }
 
-
-
-    // METODOS PRIVADOS
-
     /**
      * Método auxiliar utilizado para calcular el Importe Total del producto.
      *
@@ -39,6 +35,10 @@ public class ItemFactura {
 
         return cantidad * producto.getPrecioProducto();
     }
+
+
+
+    // METODOS PRIVADOS
 
 
 
