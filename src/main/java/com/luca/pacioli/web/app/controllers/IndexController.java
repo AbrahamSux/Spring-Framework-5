@@ -53,7 +53,7 @@ public class IndexController {
 	 * 
 	 * @return view index.
 	 */
-	@GetMapping({"/index", "/", "/home"})
+	@GetMapping({"/index", "/home"})
 	public String index(Model model) {
 		LOGGER.info(">>> index()");
 		
