@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Params</title>
+</head>
+<body>
+
+    <h2 th:text="${encabezado}"></h2>
+
+    <li>
+        <a th:href="@{/params/value-param(text='Abraham Juárez')}">/params/value-param?text=Abraham</a>
+    </li>
+    <li>
+        <a th:href="@{/params/value-param(text='Diana Camarillo')}">/params/value-param?text=Diana</a>
+    </li>
+
+    <br>
+    <li>
+        <a th:href="@{/params/mix-params(name='Ernesto Juárez', number=)}">/params/mix-params?name=Ernesto&number=NULL</a>
+    </li>
+    <li>
+        <a th:href="@{/params/mix-params(name='Dalia de la Cruz', number=5517639196)}">
+            /params/mix-params?name=Dalia&number=******9196
+        </a>
+    </li>
+
+    <br>
+    <li>
+        <a th:href="@{/params/mix-params-request(name='Dalia de la Cruz', number=5517639196)}">
+            /params/mix-params-request?name=Dalia&number=******9196
+        </a>
+    </li>
+
+</body>
+</html>

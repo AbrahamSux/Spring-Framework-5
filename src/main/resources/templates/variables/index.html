@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Params</title>
+</head>
+<body>
+
+    <h2 th:text="${encabezado}"></h2>
+
+    <li>
+        <a th:href="@{/path/variable/} + 'Abraham Juárez' "> /path/variable/Abraham </a>
+    </li>
+    <li>
+        <a th:href="@{/path/variable/} + 'Diana Camarillo' "> /path/variable/Diana </a>
+    </li>
+
+    <br>
+    <li>
+        <a th:href="@{/path/variables/} + 'Ernesto Juárez' + '/' + 5517639196"> /path/variables/Ernesto/******9196 </a>
+    </li>
+    <li>
+        <a th:href="@{/path/variables/} + ${'Dalia de la Cruz'} + '/' + ${'5517639197'}"> /path/variables/Dalia/******9197 </a>
+    </li>
+
+
+
+</body>
+</html>
