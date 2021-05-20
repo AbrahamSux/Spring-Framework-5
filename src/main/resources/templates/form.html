@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario</title>
+</head>
+<body>
+
+    <h2 th:text="${formulario}"></h2>
+
+    <form th:action="@{/form}" method="POST">
+        <div>
+            <label for="idUsername">Username</label>
+            <div> <input type="text" name="username" id="idUsername"> </div>
+        </div>
+        <div>
+            <label for="idPassword">Password</label>
+            <div> <input type="password" name="password" id="idPassword"> </div>
+        </div>
+        <div>
+            <label for="idEmail">E-mail</label>
+            <div> <input type="email" name="email" id="idEmail"> </div>
+        </div>
+
+        <div>
+            <div> <input type="submit" value="Enviar"> </div>
+        </div>
+    </form>
+
+</body>
+</html>
