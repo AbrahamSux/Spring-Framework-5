@@ -1,4 +1,4 @@
-package com.luca.pacioli.web.app.models;
+package com.luca.pacioli.web.app.models.entity;
 
 public class Usuario {
 
