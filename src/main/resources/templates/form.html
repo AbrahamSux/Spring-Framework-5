@@ -11,15 +11,18 @@
     <form th:action="@{/form}" method="POST">
         <div>
             <label for="idUsername">Username</label>
-            <div> <input type="text" name="username" id="idUsername"> </div>
+            <div> <input type="text" name="username" id="idUsername" th:value="${usuario.username}"> </div>
+            <div th:if="${error != null && error.containsKey('username')}" th:text="${error.get('username')}"></div>
         </div>
         <div>
             <label for="idPassword">Password</label>
             <div> <input type="password" name="password" id="idPassword"> </div>
+            <div th:if="${error != null && error.containsKey('password')}" th:text="${error.get('password')}"></div>
         </div>
         <div>
             <label for="idEmail">E-mail</label>
-            <div> <input type="email" name="email" id="idEmail"> </div>
+            <div> <input type="text" name="email" id="idEmail" th:value="${usuario.email}"> </div>
+            <div th:if="${error != null && error.containsKey('email')}" th:text="${error.get('email')}"></div>
         </div>
 
         <div>

@@ -1,9 +1,16 @@
 package com.luca.pacioli.web.app.models.entity;
 
+import javax.validation.constraints.NotEmpty;
+
 public class Usuario {
 
+    @NotEmpty
     String username;
+
+    @NotEmpty
     String password;
+
+    @NotEmpty
     String email;
 
     public String getUsername() {
