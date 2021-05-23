@@ -1,17 +1,54 @@
 package com.luca.pacioli.web.app.models.entity;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 public class Usuario {
 
+    String identificador;
+
     @NotEmpty
+    String nombre;
+
+    @NotEmpty
+    String apellido;
+
+    @NotEmpty
+    @Size(min = 5, max = 15, message = "")
     String username;
 
     @NotEmpty
+    @Size(min = 8, max = 12, message = "")
     String password;
 
     @NotEmpty
+    @Email
     String email;
+
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(String identificador) {
+        this.identificador = identificador;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
 
     public String getUsername() {
         return username;
@@ -40,7 +77,10 @@ public class Usuario {
     @Override
     public String toString() {
         return "Usuario{" +
-                "username='" + username + '\'' +
+                "identificador='" + identificador + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 '}';

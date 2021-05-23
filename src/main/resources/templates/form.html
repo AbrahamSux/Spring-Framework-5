@@ -8,21 +8,31 @@
 
     <h2 th:text="${formulario}"></h2>
 
-    <form th:action="@{/form}" method="POST">
+    <form th:action="@{/form}" th:object="${usuario}" method="POST">
+        <div>
+            <label for="idNombre">Nombre</label>
+            <div> <input type="text" id="idNombre" th:field="*{nombre}"> </div>
+            <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+        </div>
+        <div>
+            <label for="idApellido">Apellido</label>
+            <div> <input type="text" id="idApellido" th:field="*{apellido}"> </div>
+            <div th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></div>
+        </div>
         <div>
             <label for="idUsername">Username</label>
-            <div> <input type="text" name="username" id="idUsername" th:value="${usuario.username}"> </div>
-            <div th:if="${error != null && error.containsKey('username')}" th:text="${error.get('username')}"></div>
+            <div> <input type="text" id="idUsername" th:field="*{username}"> </div>
+            <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
         </div>
         <div>
             <label for="idPassword">Password</label>
-            <div> <input type="password" name="password" id="idPassword"> </div>
-            <div th:if="${error != null && error.containsKey('password')}" th:text="${error.get('password')}"></div>
+            <div> <input type="password" id="idPassword" th:field="*{password}"> </div>
+            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
         </div>
         <div>
             <label for="idEmail">E-mail</label>
-            <div> <input type="text" name="email" id="idEmail" th:value="${usuario.email}"> </div>
-            <div th:if="${error != null && error.containsKey('email')}" th:text="${error.get('email')}"></div>
+            <div> <input type="text" id="idEmail" th:field="*{email}"> </div>
+            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
         </div>
 
         <div>
