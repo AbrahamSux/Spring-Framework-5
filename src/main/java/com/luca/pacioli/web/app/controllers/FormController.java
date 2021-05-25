@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -32,6 +34,11 @@ public class FormController {
     @Autowired
     @Qualifier("userValidator")
     private UserValidator userValidator;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.addValidators(userValidator);
+    }
 
     @GetMapping("/form")
     public String obtenerForm(Model model) {
@@ -55,9 +62,8 @@ public class FormController {
     public String procesarForm(@Valid Usuario usuario, BindingResult result, Model model, SessionStatus status) {
         LOGGER.info(">>> procesarForm( " + usuario.toString() + " ) ");
 
-        userValidator.validate(usuario, result);
-
         if (result.hasErrors()) {
+            LOGGER.info("Retornando a la vista form...");
 
             return "form";
         }
