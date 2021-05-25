@@ -22,28 +22,22 @@ public class UserValidator implements Validator {
     public void validate(Object target, Errors errors) {
 
         if (LOGGER.isInfoEnabled()) {
-            LOGGER.info(">>> validate( " + target.toString() + " " + errors.getFieldErrors() + " )");
+            LOGGER.info(">>> validate( " + target.toString() + ", " + errors.getFieldErrors() + " )");
         }
 
-        if (errors.hasErrors()) {
-
-            if (LOGGER.isInfoEnabled()) {
-                LOGGER.info("El validador encontro " + errors.getErrorCount() + " errores");
-            }
-
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre", "NotEmpty.usuario.nombre");
-
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "apellido", "NotEmpty.usuario.apellido");
-
-            if ( !((Usuario) target).getIdentificador().matches("[0-9]{3}[-][\\d]{3}[-][\\d]{3}[-][A-Z]{2}") ) {
-                errors.rejectValue("identificador", "Pattern.usuario.identificador");
-            }
-
-        } else {
-            if (LOGGER.isInfoEnabled()) {
-                LOGGER.info("El validador no encontro errores.");
-            }
+        if ( !((Usuario) target).getIdentificador().matches("[0-9]{3}[-][\\d]{3}[-][\\d]{3}[-][A-Z]{2}") ) {
+            errors.rejectValue("identificador", "pattern.usuario.identificador");
         }
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre", "notEmpty.usuario.nombre");
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "apellido", "notEmpty.usuario.apellido");
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "notBlank.usuario.username");
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "notBlank.usuario.password");
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "notBlank.usuario.email");
 
     }
 
