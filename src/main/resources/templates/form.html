@@ -10,6 +10,12 @@
 
     <form th:action="@{/form}" th:object="${usuario}" method="POST">
         <div>
+            <label for="identificador">Identificador</label>
+            <div> <input type="text" id="identificador" th:field="*{identificador}"> </div>
+            <div th:if="${#fields.hasErrors('identificador')}" th:errors="*{identificador}"></div>
+        </div>
+
+        <div>
             <label for="idNombre">Nombre</label>
             <div> <input type="text" id="idNombre" th:field="*{nombre}"> </div>
             <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
