@@ -25,9 +25,9 @@ public class UserValidator implements Validator {
             LOGGER.info(">>> validate( " + target.toString() + ", " + errors.getFieldErrors() + " )");
         }
 
-        if ( !((Usuario) target).getIdentificador().matches("[0-9]{3}[-][\\d]{3}[-][\\d]{3}[-][A-Z]{2}") ) {
+        /*if ( !((Usuario) target).getIdentificador().matches("[0-9]{3}[-][\\d]{3}[-][\\d]{3}[-][A-Z]{2}") ) {
             errors.rejectValue("identificador", "pattern.usuario.identificador");
-        }
+        }*/
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre", "notEmpty.usuario.nombre");
 

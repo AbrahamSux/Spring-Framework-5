@@ -1,10 +1,13 @@
 package com.luca.pacioli.web.app.models.entity;
 
+import com.luca.pacioli.web.app.validations.annotation.IdentificadorSku;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 public class Usuario {
 
+    @IdentificadorSku
     String identificador;
 
     String nombre;
