@@ -63,7 +63,7 @@ public class FormController {
         LOGGER.info(">>> procesarForm( " + usuario.toString() + " ) ");
 
         if (result.hasErrors()) {
-            LOGGER.info("Retornando a la vista form...");
+            LOGGER.info("Retornando a la vista del form...");
 
             return "form";
         }
