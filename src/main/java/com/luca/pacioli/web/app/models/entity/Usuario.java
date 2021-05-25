@@ -3,25 +3,34 @@ package com.luca.pacioli.web.app.models.entity;
 import com.luca.pacioli.web.app.validations.annotation.IdentificadorSku;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 
 public class Usuario {
 
     @IdentificadorSku
-    String identificador;
+    private String identificador;
 
-    String nombre;
+    private String nombre;
 
-    String apellido;
+    private String apellido;
 
     @Size(min = 5, max = 15)
-    String username;
+    private String username;
 
     @Size(min = 8, max = 12)
-    String password;
+    private String password;
 
     @Email
-    String email;
+    private String email;
+
+    @NotNull
+    @Min(10)
+    @Max(10000)
+    private Double cuenta;
 
     public String getIdentificador() {
         return identificador;
@@ -71,6 +80,14 @@ public class Usuario {
         this.email = email;
     }
 
+    public Double getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(Double cuenta) {
+        this.cuenta = cuenta;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -80,6 +97,7 @@ public class Usuario {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", cuenta='" + cuenta + '\'' +
                 '}';
     }
 
