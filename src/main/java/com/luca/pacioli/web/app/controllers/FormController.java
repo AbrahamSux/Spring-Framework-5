@@ -1,8 +1,11 @@
 package com.luca.pacioli.web.app.controllers;
 
 import com.luca.pacioli.web.app.models.entity.Usuario;
+import com.luca.pacioli.web.app.validations.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +29,10 @@ public class FormController {
     @Value("${controller.form.titulo.user}")
     private String tituloUsuario;
 
+    @Autowired
+    @Qualifier("userValidator")
+    private UserValidator userValidator;
+
     @GetMapping("/form")
     public String obtenerForm(Model model) {
         LOGGER.info(">>> obtenerForm() ");
@@ -47,6 +54,8 @@ public class FormController {
     @PostMapping("/form")
     public String procesarForm(@Valid Usuario usuario, BindingResult result, Model model, SessionStatus status) {
         LOGGER.info(">>> procesarForm( " + usuario.toString() + " ) ");
+
+        userValidator.validate(usuario, result);
 
         if (result.hasErrors()) {
 
