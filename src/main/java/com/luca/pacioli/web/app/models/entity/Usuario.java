@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -32,7 +33,8 @@ public class Usuario {
     @Max(10000)
     private Double cuenta;
 
-    @DateTimeFormat(pattern = "yyy/MM/dd")
+    @Past
+    @DateTimeFormat(pattern = "yyy-MM-dd")
     private Date fechaNacimiento;
 
     public String getIdentificador() {
