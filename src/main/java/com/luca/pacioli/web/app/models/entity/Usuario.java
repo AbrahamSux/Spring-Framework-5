@@ -1,12 +1,13 @@
 package com.luca.pacioli.web.app.models.entity;
 
 import com.luca.pacioli.web.app.validations.annotation.IdentificadorSku;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 
 public class Usuario {
@@ -27,10 +28,12 @@ public class Usuario {
     @Email
     private String email;
 
-    @NotNull
     @Min(10)
     @Max(10000)
     private Double cuenta;
+
+    @DateTimeFormat(pattern = "yyy/MM/dd")
+    private Date fechaNacimiento;
 
     public String getIdentificador() {
         return identificador;
@@ -88,6 +91,14 @@ public class Usuario {
         this.cuenta = cuenta;
     }
 
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -98,6 +109,7 @@ public class Usuario {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", cuenta='" + cuenta + '\'' +
+                ", fechaNacimiento='" + fechaNacimiento + '\'' +
                 '}';
     }
 

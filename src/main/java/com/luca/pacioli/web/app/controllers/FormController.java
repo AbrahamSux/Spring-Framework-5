@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 
 @Controller
@@ -31,7 +32,7 @@ public class FormController {
     @Value("${controller.form.titulo.user}")
     private String tituloUsuario;
 
-    @Autowired
+    @Inject
     @Qualifier("userValidator")
     private UserValidator userValidator;
 

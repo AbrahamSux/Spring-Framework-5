@@ -39,6 +39,10 @@ public class UserValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "notBlank.usuario.email");
 
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cuenta", "notNull.usuario.cuenta");
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "fechaNacimiento", "notNull.usuario.fechaNacimiento");
+
     }
 
 }
