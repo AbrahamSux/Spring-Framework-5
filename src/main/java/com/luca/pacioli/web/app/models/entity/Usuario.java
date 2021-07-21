@@ -37,6 +37,8 @@ public class Usuario {
     @DateTimeFormat(pattern = "yyy-MM-dd")
     private Date fechaNacimiento;
 
+    private String pais;
+
     public String getIdentificador() {
         return identificador;
     }
@@ -101,6 +103,14 @@ public class Usuario {
         this.fechaNacimiento = fechaNacimiento;
     }
 
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -110,8 +120,9 @@ public class Usuario {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", cuenta='" + cuenta + '\'' +
-                ", fechaNacimiento='" + fechaNacimiento + '\'' +
+                ", cuenta=" + cuenta +
+                ", fechaNacimiento=" + fechaNacimiento +
+                ", pais='" + pais + '\'' +
                 '}';
     }
 
