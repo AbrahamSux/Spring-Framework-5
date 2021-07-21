@@ -1,6 +1,7 @@
 package com.luca.pacioli.web.app.controllers;
 
 import com.luca.pacioli.web.app.models.entity.Usuario;
+import com.luca.pacioli.web.app.util.editors.MayusculaEditor;
 import com.luca.pacioli.web.app.validations.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,12 @@ public class FormController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
+        // BINDER UTILIZADO PARA VALIDAR LOS CAMPOS DE LA VISTA.
         binder.addValidators(userValidator);
+
+        // BINDER UTILIZADO PARA CONVERTIR A MAYUSCULAS.
+        binder.registerCustomEditor(String.class, "nombre", new MayusculaEditor());
+        binder.registerCustomEditor(String.class, "apellido", new MayusculaEditor());
     }
 
     @GetMapping("/form")
