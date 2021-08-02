@@ -3,6 +3,7 @@ package com.luca.pacioli.web.app.controllers;
 import com.luca.pacioli.web.app.models.entity.Pais;
 import com.luca.pacioli.web.app.models.entity.Usuario;
 import com.luca.pacioli.web.app.services.PaisService;
+import com.luca.pacioli.web.app.util.Constants;
 import com.luca.pacioli.web.app.util.editors.MayusculaEditor;
 import com.luca.pacioli.web.app.util.editors.PaisEditor;
 import com.luca.pacioli.web.app.validations.UserValidator;
@@ -64,7 +65,7 @@ public class FormController {
         binder.registerCustomEditor(Pais.class, "pais", paisEditor);
     }
 
-    
+
     @GetMapping("/form")
     public String obtenerForm(Model model) {
         LOGGER.info(">>> obtenerForm() ");
@@ -105,6 +106,12 @@ public class FormController {
         LOGGER.info(">>> listaPaises()");
 
         return paisService.obtenerPaises();
+    }
+
+    @ModelAttribute("listaRoles")
+    public List<String> listaRoles() {
+
+        return Constants.listaRoles();
     }
 
 }

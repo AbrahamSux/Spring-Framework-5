@@ -2,10 +2,7 @@ package com.luca.pacioli.web.app.util;
 
 import com.luca.pacioli.web.app.models.entity.Pais;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class Constants {
 
@@ -36,5 +33,15 @@ public final class Constants {
             new Pais(6, "AR", "Argentina"),
             new Pais(7, "VE", "Venezuela")
     );
+
+    public final static List<String> listaRoles() {
+        List<String> roles = new ArrayList<>();
+
+        roles.add("ROLE_ADMIN");
+        roles.add("ROLE_USER");
+        roles.add("ROLE_MODERATOR");
+
+        return roles;
+    }
 
 }

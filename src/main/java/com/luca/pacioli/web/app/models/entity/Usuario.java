@@ -43,6 +43,7 @@ public class Usuario {
     private Pais pais;
 
     @NotNull
+    @Size(min = 1, max = 3)
     private List<String> roles;
 
     public String getIdentificador() {
