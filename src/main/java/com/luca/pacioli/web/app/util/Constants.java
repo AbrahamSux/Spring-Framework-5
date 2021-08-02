@@ -2,9 +2,17 @@ package com.luca.pacioli.web.app.util;
 
 import com.luca.pacioli.web.app.models.entity.Pais;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class Constants {
+
+    /**
+     * SELECCIÓN PARA PAISES
+     */
 
     public final static List<String> paises = Arrays.asList(
             "España", "México", "Perú", "Colombia", "Chile", "Argentina", "Venezuela"
@@ -34,12 +42,28 @@ public final class Constants {
             new Pais(7, "VE", "Venezuela")
     );
 
-    public final static List<String> listaRoles() {
+
+
+    /**
+     * SELECCIÓN PARA ROLES
+     */
+
+    public final static List<String> roles() {
         List<String> roles = new ArrayList<>();
 
         roles.add("ROLE_ADMIN");
         roles.add("ROLE_USER");
         roles.add("ROLE_MODERATOR");
+
+        return roles;
+    }
+
+    public final static Map<String, String> rolesMap() {
+        Map<String, String> roles = new HashMap<String, String>();
+
+        roles.put("ROLE_ADMIN", "Administrador");
+        roles.put("ROLE_USER", "Usuario");
+        roles.put("ROLE_MODERATOR", "Moderador");
 
         return roles;
     }

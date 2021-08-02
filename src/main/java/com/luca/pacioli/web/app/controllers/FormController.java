@@ -26,6 +26,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @SessionAttributes("usuario")
@@ -109,9 +110,9 @@ public class FormController {
     }
 
     @ModelAttribute("listaRoles")
-    public List<String> listaRoles() {
+    public Map<String, String> listaRoles() {
 
-        return Constants.listaRoles();
+        return Constants.rolesMap();
     }
 
 }
