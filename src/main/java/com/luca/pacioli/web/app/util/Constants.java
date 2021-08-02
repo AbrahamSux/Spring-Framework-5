@@ -1,6 +1,7 @@
 package com.luca.pacioli.web.app.util;
 
 import com.luca.pacioli.web.app.models.entity.Pais;
+import com.luca.pacioli.web.app.models.entity.Role;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,5 +68,11 @@ public final class Constants {
 
         return roles;
     }
+
+    public final static List<Role> listaDeRoles = Arrays.asList(
+            new Role(1, "Administrador", "ROLE_ADMIN"),
+            new Role(2, "Usuario", "ROLE_USER"),
+            new Role(3, "Moderador", "ROLE_MODERATOR")
+    );
 
 }

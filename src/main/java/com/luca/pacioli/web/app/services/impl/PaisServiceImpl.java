@@ -16,6 +16,7 @@ public class PaisServiceImpl implements PaisService {
 
     private final List<Pais> listaPaises = Constants.listaPaises;
 
+
     @Override
     public List<Pais> obtenerPaises() {
         LOGGER.info(">>> obtenerPaises()");

@@ -1,11 +1,13 @@
 package com.luca.pacioli.web.app.controllers;
 
 import com.luca.pacioli.web.app.models.entity.Pais;
+import com.luca.pacioli.web.app.models.entity.Role;
 import com.luca.pacioli.web.app.models.entity.Usuario;
 import com.luca.pacioli.web.app.services.PaisService;
-import com.luca.pacioli.web.app.util.Constants;
+import com.luca.pacioli.web.app.services.RoleService;
 import com.luca.pacioli.web.app.util.editors.MayusculaEditor;
 import com.luca.pacioli.web.app.util.editors.PaisEditor;
+import com.luca.pacioli.web.app.util.editors.RoleEditor;
 import com.luca.pacioli.web.app.validations.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +28,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @SessionAttributes("usuario")
@@ -52,6 +53,14 @@ public class FormController {
     @Qualifier("paisEditor")
     private PaisEditor paisEditor;
 
+    @Autowired
+    @Qualifier("roleService")
+    private RoleService roleService;
+
+    @Autowired
+    @Qualifier("roleEditor")
+    private RoleEditor roleEditor;
+
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -64,6 +73,9 @@ public class FormController {
 
         // BINDER UTILIZADO PARA ESTABLECER LOS VALORES DEL PAIS.
         binder.registerCustomEditor(Pais.class, "pais", paisEditor);
+
+        // BINDER UTILIZADO PARA ESTABLECER LOS VALORES DE LOS ROLES.
+        binder.registerCustomEditor(Role.class, "roles", roleEditor);
     }
 
 
@@ -110,9 +122,10 @@ public class FormController {
     }
 
     @ModelAttribute("listaRoles")
-    public Map<String, String> listaRoles() {
+    public List<Role> listaRoles() {
+        LOGGER.info(">>> listaRoles()");
 
-        return Constants.rolesMap();
+        return roleService.obtenerRoles();
     }
 
 }
