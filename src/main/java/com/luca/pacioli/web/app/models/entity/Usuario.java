@@ -3,9 +3,14 @@ package com.luca.pacioli.web.app.models.entity;
 import com.luca.pacioli.web.app.validations.annotation.IdentificadorSku;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 
 public class Usuario {
@@ -36,6 +41,9 @@ public class Usuario {
 
     @NotNull
     private Pais pais;
+
+    @NotNull
+    private List<String> roles;
 
     public String getIdentificador() {
         return identificador;
@@ -109,6 +117,14 @@ public class Usuario {
         this.pais = pais;
     }
 
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -120,7 +136,8 @@ public class Usuario {
                 ", email='" + email + '\'' +
                 ", cuenta=" + cuenta +
                 ", fechaNacimiento=" + fechaNacimiento +
-                ", pais='" + pais + '\'' +
+                ", pais=" + pais +
+                ", roles=" + roles +
                 '}';
     }
 
