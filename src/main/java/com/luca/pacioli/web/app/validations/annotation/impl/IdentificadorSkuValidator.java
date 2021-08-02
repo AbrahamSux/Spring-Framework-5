@@ -1,4 +1,6 @@
-package com.luca.pacioli.web.app.validations.annotation;
+package com.luca.pacioli.web.app.validations.annotation.impl;
+
+import com.luca.pacioli.web.app.validations.annotation.IdentificadorSku;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

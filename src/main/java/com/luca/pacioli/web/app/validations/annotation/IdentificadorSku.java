@@ -1,5 +1,7 @@
 package com.luca.pacioli.web.app.validations.annotation;
 
+import com.luca.pacioli.web.app.validations.annotation.impl.IdentificadorSkuValidator;
+
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.ElementType;

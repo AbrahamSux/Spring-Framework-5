@@ -2,10 +2,13 @@ package com.luca.pacioli.web.app.controllers;
 
 import com.luca.pacioli.web.app.models.entity.Pais;
 import com.luca.pacioli.web.app.models.entity.Usuario;
+import com.luca.pacioli.web.app.services.PaisService;
 import com.luca.pacioli.web.app.util.editors.MayusculaEditor;
+import com.luca.pacioli.web.app.util.editors.PaisEditor;
 import com.luca.pacioli.web.app.validations.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -42,6 +45,14 @@ public class FormController {
     @Qualifier("userValidator")
     private UserValidator userValidator;
 
+    @Autowired
+    @Qualifier("paisService")
+    private PaisService paisService;
+
+    @Autowired
+    @Qualifier("paisEditor")
+    private PaisEditor paisEditor;
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         // BINDER UTILIZADO PARA VALIDAR LOS CAMPOS DE LA VISTA.
@@ -50,6 +61,9 @@ public class FormController {
         // BINDER UTILIZADO PARA CONVERTIR A MAYUSCULAS.
         binder.registerCustomEditor(String.class, "nombre", new MayusculaEditor());
         binder.registerCustomEditor(String.class, "apellido", new MayusculaEditor());
+
+        // BINDER UTILIZADO PARA ESTABLECER LOS VALORES DEL PAIS.
+        binder.registerCustomEditor(Pais.class, "pais", paisEditor);
     }
 
     @GetMapping("/form")
@@ -111,15 +125,9 @@ public class FormController {
 
     @ModelAttribute("listaPaises")
     public List<Pais> listaPaises() {
-        return Arrays.asList(
-                new Pais(1, "ES", "España"),
-                new Pais(2, "MX", "México"),
-                new Pais(3, "PE", "Perú"),
-                new Pais(4, "CO", "Colombia"),
-                new Pais(5, "CL", "Chile"),
-                new Pais(6, "AR", "Argentina"),
-                new Pais(7, "VE", "Venezuela")
-        );
+        LOGGER.info(">>> listaPaises()");
+
+        return paisService.obtenerPaises();
     }
 
 }

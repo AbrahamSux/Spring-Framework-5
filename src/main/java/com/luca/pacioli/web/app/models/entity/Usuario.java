@@ -4,11 +4,7 @@ import com.luca.pacioli.web.app.validations.annotation.IdentificadorSku;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 
@@ -38,7 +34,7 @@ public class Usuario {
     @DateTimeFormat(pattern = "yyy-MM-dd")
     private Date fechaNacimiento;
 
-    @Valid
+    @NotNull
     private Pais pais;
 
     public String getIdentificador() {
