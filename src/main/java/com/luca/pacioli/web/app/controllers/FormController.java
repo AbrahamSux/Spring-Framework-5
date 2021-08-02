@@ -21,7 +21,9 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @SessionAttributes("usuario")
@@ -89,6 +91,21 @@ public class FormController {
         return Arrays.asList(
                 "España", "México", "Perú", "Colombia", "Chile", "Argentina", "Venezuela"
         );
+    }
+
+    @ModelAttribute("paisesMap")
+    public Map<String, String> paisesMap() {
+        Map<String, String> paises = new HashMap<String, String>();
+
+        paises.put("ES", "España");
+        paises.put("MX", "México");
+        paises.put("CL", "Chile");
+        paises.put("AR", "Argentina");
+        paises.put("PE", "Perú");
+        paises.put("CO", "Colombia");
+        paises.put("VE", "Venezuela");
+
+        return paises;
     }
 
 }
