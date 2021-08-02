@@ -1,5 +1,6 @@
 package com.luca.pacioli.web.app.controllers;
 
+import com.luca.pacioli.web.app.models.entity.Pais;
 import com.luca.pacioli.web.app.models.entity.Usuario;
 import com.luca.pacioli.web.app.util.editors.MayusculaEditor;
 import com.luca.pacioli.web.app.validations.UserValidator;
@@ -106,6 +107,19 @@ public class FormController {
         paises.put("VE", "Venezuela");
 
         return paises;
+    }
+
+    @ModelAttribute("listaPaises")
+    public List<Pais> listaPaises() {
+        return Arrays.asList(
+                new Pais(1, "ES", "España"),
+                new Pais(2, "MX", "México"),
+                new Pais(3, "PE", "Perú"),
+                new Pais(4, "CO", "Colombia"),
+                new Pais(5, "CL", "Chile"),
+                new Pais(6, "AR", "Argentina"),
+                new Pais(7, "VE", "Venezuela")
+        );
     }
 
 }

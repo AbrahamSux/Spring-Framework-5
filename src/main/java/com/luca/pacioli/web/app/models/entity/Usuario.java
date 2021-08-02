@@ -3,6 +3,7 @@ package com.luca.pacioli.web.app.models.entity;
 import com.luca.pacioli.web.app.validations.annotation.IdentificadorSku;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -37,7 +38,8 @@ public class Usuario {
     @DateTimeFormat(pattern = "yyy-MM-dd")
     private Date fechaNacimiento;
 
-    private String pais;
+    @Valid
+    private Pais pais;
 
     public String getIdentificador() {
         return identificador;
@@ -103,11 +105,11 @@ public class Usuario {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getPais() {
+    public Pais getPais() {
         return pais;
     }
 
-    public void setPais(String pais) {
+    public void setPais(Pais pais) {
         this.pais = pais;
     }
 

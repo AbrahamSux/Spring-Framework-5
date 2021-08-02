@@ -43,7 +43,10 @@ public class UserValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "fechaNacimiento", "notNull.usuario.fechaNacimiento");
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "pais", "notEmpty.usuario.pais");
+
+        // VALIDACIONES PARA LOS ATRIBUTOS DEL OBJETO PAIS.
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "pais.codigo", "notEmpty.usuario.pais.codigo");
 
     }
 
