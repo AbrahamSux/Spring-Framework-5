@@ -9,6 +9,12 @@
     <h2 th:text="${formulario}"></h2>
 
     <form th:action="@{/form}" th:object="${usuario}" method="POST">
+
+        <div>
+            <div> <input type="hidden" th:field="*{valorSecreto}"> </div>
+            <!--div th:if="${#fields.hasErrors('valorSecreto')}" th:errors="*{valorSecreto}"></div-->
+        </div>
+
         <div>
             <label for="idPais">Pais</label>
             <div>

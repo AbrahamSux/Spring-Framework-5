@@ -3,7 +3,12 @@ package com.luca.pacioli.web.app.models.entity;
 import com.luca.pacioli.web.app.validations.annotation.IdentificadorSku;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +49,8 @@ public class Usuario {
     private Boolean habilitar;
 
     private String genero;
+
+    private String valorSecreto;
 
     public String getIdentificador() {
         return identificador;
@@ -141,6 +148,14 @@ public class Usuario {
         this.genero = genero;
     }
 
+    public String getValorSecreto() {
+        return valorSecreto;
+    }
+
+    public void setValorSecreto(String valorSecreto) {
+        this.valorSecreto = valorSecreto;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -156,6 +171,7 @@ public class Usuario {
                 ", roles=" + roles +
                 ", habilitar=" + habilitar +
                 ", genero='" + genero + '\'' +
+                ", valorSecreto='" + valorSecreto + '\'' +
                 '}';
     }
 
