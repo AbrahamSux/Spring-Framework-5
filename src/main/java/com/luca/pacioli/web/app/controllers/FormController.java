@@ -27,6 +27,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -127,6 +128,14 @@ public class FormController {
         LOGGER.info(">>> listaRoles()");
 
         return roleService.obtenerRoles();
+    }
+
+    @ModelAttribute("listaGeneros")
+    public List<String> generos() {
+        return Arrays.asList(
+                "Mujer",
+                "Hombre"
+        );
     }
 
 }
