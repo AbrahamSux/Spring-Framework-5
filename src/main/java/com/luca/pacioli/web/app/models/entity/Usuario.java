@@ -25,7 +25,7 @@ public class Usuario {
     @Size(min = 5, max = 15)
     private String username;
 
-    @Size(min = 8, max = 12)
+    @Size(min = 8, max = 15)
     private String password;
 
     @Email

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -104,7 +105,7 @@ public class FormController {
     }
 
     @PostMapping("/form")
-    public String procesarForm(@Valid Usuario usuario, BindingResult result, Model model, SessionStatus status) {
+    public String procesarForm(@Valid Usuario usuario, BindingResult result, Model model) {
         LOGGER.info(">>> procesarForm( " + usuario.toString() + " ) ");
 
         if (result.hasErrors()) {
@@ -113,12 +114,25 @@ public class FormController {
             return "form";
         }
 
+        return "redirect:/ver";
+    }
+
+    @GetMapping("/ver")
+    public String mostrarFormulario(
+            @SessionAttribute(name = "usuario", required = false) Usuario usuario,
+            Model model, SessionStatus status) {
+
+        if (usuario == null) {
+            return "redirect:/form";
+        }
+
         model.addAttribute("titulo", tituloUsuario);
         model.addAttribute("user", usuario);
         status.setComplete();
 
         return "resultado";
     }
+
 
     @ModelAttribute("listaPaises")
     public List<Pais> listaPaises() {
