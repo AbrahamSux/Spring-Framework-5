@@ -46,6 +46,8 @@ public class Usuario {
     @Size(min = 1, max = 3)
     private List<Role> roles;
 
+    private Boolean habilitar;
+
     public String getIdentificador() {
         return identificador;
     }
@@ -126,6 +128,14 @@ public class Usuario {
         this.roles = roles;
     }
 
+    public Boolean getHabilitar() {
+        return habilitar;
+    }
+
+    public void setHabilitar(Boolean habilitar) {
+        this.habilitar = habilitar;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -139,6 +149,7 @@ public class Usuario {
                 ", fechaNacimiento=" + fechaNacimiento +
                 ", pais=" + pais +
                 ", roles=" + roles +
+                ", habilitar=" + habilitar +
                 '}';
     }
 
