@@ -28,6 +28,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -90,6 +91,8 @@ public class FormController {
         usuario.setApellido("Juárez");
         usuario.setHabilitar(false);
         usuario.setValorSecreto("Estableciendo valor secreto...");
+        usuario.setPais(new Pais(2, "MX", "México"));
+        usuario.setRoles(Collections.singletonList(new Role(2, "Usuario", "ROLE_USER")));
 
         model.addAttribute("formulario", tituloFormulario);
 
