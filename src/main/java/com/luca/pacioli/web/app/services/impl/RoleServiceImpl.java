@@ -26,7 +26,10 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role obtenerRolePorId(Integer identificador) {
-        LOGGER.info("obtenerRolePorId( {} )", identificador);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("obtenerRolePorId( {} )", identificador);
+        }
 
         if (this.roles == null || this.roles.size() <= 0 ) {
             LOGGER.warn("Advertencia, la lista de roles es nulla o vacia.");

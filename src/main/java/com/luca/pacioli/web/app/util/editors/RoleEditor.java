@@ -33,7 +33,10 @@ public class RoleEditor extends PropertyEditorSupport {
         } catch (NumberFormatException nfe) {
             this.setValue(null);
         }
-        LOGGER.info("Role : {}", ((role != null) ? role.toString() : "NULL") );
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Role : {}", ((role != null) ? role.toString() : "NULL") );
+        }
 
         this.setValue(role);
     }

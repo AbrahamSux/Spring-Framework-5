@@ -30,7 +30,10 @@ public class PaisEditor extends PropertyEditorSupport {
         } catch (NumberFormatException nfe) {
             this.setValue(null);
         }
-        LOGGER.info("Pais : {}", ((pais != null) ? pais.toString() : "NULL") );
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Pais : {}", ((pais != null) ? pais.toString() : "NULL") );
+        }
 
         this.setValue(pais);
     }

@@ -26,7 +26,10 @@ public class PaisServiceImpl implements PaisService {
 
     @Override
     public Pais obtenerPaisPorId(Integer identificador) {
-        LOGGER.info(">>> obtenerPaisPorId( {} )", identificador);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(">>> obtenerPaisPorId( {} )", identificador);
+        }
 
         if (this.listaPaises == null || this.listaPaises.size() <= 0 ) {
             LOGGER.warn("Advertencia, la lista de paises es nulla o vacia.");

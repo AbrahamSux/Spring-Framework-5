@@ -9,6 +9,10 @@
 
     <h2 th:text="${formulario}"></h2>
 
+    <div class="alert alert-success">
+        <span th:text="'Tiempo transcurrido: ' + ${tiempoTranscurrido} + ' en milisegundos.' "></span>
+    </div>
+
     <div class="container">
 
         <form th:action="@{/form}" th:object="${usuario}" method="POST">
