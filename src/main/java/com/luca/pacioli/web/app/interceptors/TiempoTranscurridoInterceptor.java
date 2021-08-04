@@ -21,6 +21,12 @@ public class TiempoTranscurridoInterceptor implements HandlerInterceptor {
             throws Exception {
         LOGGER.info(">>> Entrando : preHandle()");
 
+        // PARA NO REALIZAR EL PROCESO DEL INTERCEPTOR CUANDO SEA UN MÉTODO POST, ES DECIR,
+        // SOLO CUANDO SEA GET (CARGAR EL FORMULARIO), Y AL MANDARLO (EL FORMULARIO MEDIANTE POST) YA NO SE PROCESA.
+        if (request.getMethod().equalsIgnoreCase("post")) {
+            return true;
+        }
+
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             LOGGER.info("Es un metodo del Controlador : {} => {}", handlerMethod.getBeanType(), handlerMethod.getMethod().getName());
@@ -34,7 +40,7 @@ public class TiempoTranscurridoInterceptor implements HandlerInterceptor {
 
         // REALIZA TIEMPO MUERTO.
         Random random = new Random();
-        Integer demora = random.nextInt(500);
+        Integer demora = random.nextInt(100);
         Thread.sleep(demora);
 
         return true;
@@ -44,6 +50,12 @@ public class TiempoTranscurridoInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
             throws Exception {
         LOGGER.info(">>> Saliendo : postHandle()");
+
+        // PARA NO REALIZAR EL PROCESO DEL INTERCEPTOR CUANDO SEA UN MÉTODO POST, ES DECIR,
+        // SOLO CUANDO SEA GET (CARGAR EL FORMULARIO), Y AL MANDARLO (EL FORMULARIO MEDIANTE POST) YA NO SE PROCESA.
+        if (request.getMethod().equalsIgnoreCase("post")) {
+            return;
+        }
 
         LOGGER.info("Interceptando en postHandle : {}", handler);
 
