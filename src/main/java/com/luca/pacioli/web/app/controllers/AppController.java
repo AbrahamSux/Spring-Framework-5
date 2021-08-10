@@ -34,11 +34,15 @@ public class AppController {
     @GetMapping("/ver/{id}")
     public String verUsuario(@PathVariable(name = "id") Integer indentificador, Model model) {
 
-        Usuario usuario = usuarioService.obtenerPorId(indentificador);
+        /*Usuario usuario = usuarioService.obtenerPorId(indentificador);
 
         if (usuario == null) {
             throw new UsuarioException(indentificador.toString());
-        }
+        }*/
+        Usuario usuario = usuarioService.obtenerPorIdOptional(indentificador).orElseThrow(() ->
+                new UsuarioException(indentificador.toString())
+        );
+
 
         model.addAttribute("titulo", "Detalle del usuario : ".concat(usuario.getNombre()));
         model.addAttribute("user", usuario);

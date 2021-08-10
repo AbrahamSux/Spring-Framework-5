@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service("usuarioServiceImpl")
 public class UsuarioServiceImpl implements UsuarioService {
@@ -39,6 +40,13 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
 
         return null;
+    }
+
+    @Override
+    public Optional<Usuario> obtenerPorIdOptional(Integer identificador) {
+        Usuario usuario = obtenerPorId(identificador);
+
+        return Optional.ofNullable(usuario);
     }
 
 }
