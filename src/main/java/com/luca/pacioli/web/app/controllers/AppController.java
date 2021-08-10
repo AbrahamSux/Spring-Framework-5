@@ -9,7 +9,11 @@ public class AppController {
     @GetMapping({"/", "/index"})
     public String index() {
 
+        // ERRORES Arithmetic.
         int value = 100/0;
+
+        // ERRORES NumberFormat
+        //int value = Integer.parseInt("10x");
 
         return "index";
     }
