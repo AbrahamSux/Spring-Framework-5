@@ -1,5 +1,6 @@
 package com.luca.pacioli.web.app.controllers;
 
+import com.luca.pacioli.web.app.errors.UsuarioException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -28,6 +29,20 @@ public class ErrorHandlerController {
     public String errorNumberFormat(NumberFormatException e, Model model) {
 
         model.addAttribute("error", "Se ha producido un error de Formato Numérico!");
+        model.addAttribute("message", e.getMessage());
+        model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        model.addAttribute("timestamp", new Date());
+        model.addAttribute("trace", e.fillInStackTrace());
+
+        //return "error/numberFormat";
+
+        return "error/templateGeneric";
+    }
+
+    @ExceptionHandler(UsuarioException.class)
+    public String errorUsuario(UsuarioException e, Model model) {
+
+        model.addAttribute("error", "Se ha producido un error de tipo Usuario!");
         model.addAttribute("message", e.getMessage());
         model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
         model.addAttribute("timestamp", new Date());

@@ -1,5 +1,6 @@
 package com.luca.pacioli.web.app.controllers;
 
+import com.luca.pacioli.web.app.errors.UsuarioException;
 import com.luca.pacioli.web.app.models.Usuario;
 import com.luca.pacioli.web.app.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,10 @@ public class AppController {
     public String verUsuario(@PathVariable(name = "id") Integer indentificador, Model model) {
 
         Usuario usuario = usuarioService.obtenerPorId(indentificador);
+
+        if (usuario == null) {
+            throw new UsuarioException(indentificador.toString());
+        }
 
         model.addAttribute("titulo", "Detalle del usuario : ".concat(usuario.getNombre()));
         model.addAttribute("user", usuario);
