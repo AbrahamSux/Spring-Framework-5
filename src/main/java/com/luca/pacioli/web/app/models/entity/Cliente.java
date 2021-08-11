@@ -23,8 +23,10 @@ public class Cliente implements Serializable {
 
     private String nombre;
 
+    @Column(name = "apellido_paterno")
     private String apellidoPaterno;
 
+    @Column(name = "apellido_materno")
     private String apellidoMaterno;
 
     private String email;

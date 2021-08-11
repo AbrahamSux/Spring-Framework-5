@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes</title>
+</head>
+<body>
+
+    <h1 th:text="${titulo}"></h1>
+
+    <table th:if="${not clientes.isEmpty()}">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido Paterno</th>
+            <th>Apellido Materno</th>
+            <th>E-mail</th>
+            <th>CreateAt</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each=" cliente : ${clientes}">
+            <td th:text="${cliente.nombre}"></td>
+            <td th:text="${cliente.apellidoPaterno}"></td>
+            <td th:text="${cliente.apellidoMaterno}"></td>
+            <td th:text="${cliente.email}"></td>
+            <td th:text="${cliente.createAt}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
