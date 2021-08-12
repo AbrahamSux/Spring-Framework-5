@@ -105,4 +105,16 @@ public class Cliente implements Serializable {
         this.createAt = createAt;
     }
 
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", apellidoPaterno='" + apellidoPaterno + '\'' +
+                ", apellidoMaterno='" + apellidoMaterno + '\'' +
+                ", email='" + email + '\'' +
+                ", createAt=" + createAt +
+                '}';
+    }
+
 }

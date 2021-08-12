@@ -40,6 +40,7 @@
                 <th>Apellido Materno</th>
                 <th>E-mail</th>
                 <th>CreateAt</th>
+                <th>Editar</th>
             </tr>
             </thead>
             <tbody>
@@ -49,6 +50,7 @@
                 <td th:text="${cliente.apellidoMaterno}"></td>
                 <td th:text="${cliente.email}"></td>
                 <td th:text="${cliente.createAt}"></td>
+                <td> <a class="btn btn-success btn-xs" th:href="@{/form/} + ${cliente.id}" th:text="'Editar'"></a> </td>
             </tr>
             </tbody>
         </table>

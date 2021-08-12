@@ -10,4 +10,6 @@ public interface ClienteService {
 
     public void save(Cliente cliente);
 
+    public Cliente findOne(Long identificador);
+
 }

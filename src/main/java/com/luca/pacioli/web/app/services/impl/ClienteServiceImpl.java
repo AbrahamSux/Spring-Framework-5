@@ -20,13 +20,28 @@ public class ClienteServiceImpl implements ClienteService {
     @Transactional(readOnly = true)
     @Override
     public List<Cliente> findAll() {
+
         return entityManager.createQuery("from Cliente").getResultList();
     }
 
     @Override
     @Transactional
     public void save(Cliente cliente) {
-        entityManager.persist(cliente);
+
+        // SI EL CLIENTE NO ES NULO Y EL IDENTIFICADOR ES MAYOR A CERO, ENTONCES, ACTUALIZAMOS LOS DATOS.
+        if (cliente.getId() != null && cliente.getId() > 0) {
+            entityManager.merge(cliente);
+        }
+        else {
+            // SE CREA/GUARDA UN NUEVO CLIENTE.
+            entityManager.persist(cliente);
+        }
+    }
+
+    @Override
+    public Cliente findOne(Long identificador) {
+
+        return entityManager.find(Cliente.class, identificador);
     }
 
 }

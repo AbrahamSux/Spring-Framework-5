@@ -2,11 +2,15 @@ package com.luca.pacioli.web.app.controllers;
 
 import com.luca.pacioli.web.app.models.entity.Cliente;
 import com.luca.pacioli.web.app.services.ClienteService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -16,9 +20,13 @@ import java.util.Map;
 @Controller
 public class ClienteController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClienteController.class);
+
+
     @Autowired
     @Qualifier("clienteServiceImpl")
     private ClienteService clienteService;
+
 
 
     /**
@@ -42,7 +50,12 @@ public class ClienteController {
      * @return Retorna la vista 'form'.
      */
     @RequestMapping(value = "/form", method = RequestMethod.GET)
-    public String crearCliente(Map<String, Object> model) {
+    public String cargarFormularioCliente(Map<String, Object> model) {
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">>> cargarFormularioCliente()");
+        }
+
         model.put("titulo", "Formulario del cliente");
         model.put("cliente", new Cliente());
 
@@ -58,6 +71,10 @@ public class ClienteController {
     @RequestMapping(value = "/form", method = RequestMethod.POST)
     public String guardarCliente(@Valid Cliente cliente, BindingResult result, Model model) {
 
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">>> guardarCliente( {} )", cliente.toString() );
+        }
+
         if (result.hasErrors()) {
             model.addAttribute("titulo", "Formulario del cliente");
 
@@ -67,6 +84,33 @@ public class ClienteController {
         clienteService.save(cliente);
 
         return "redirect:/clientes";
+    }
+
+    @RequestMapping(value = "/form/{id}", method = RequestMethod.GET)
+    public String editarCliente(@PathVariable(value = "id") Long identificador, ModelMap modelMap) {
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">>> editarCliente( {} )", identificador );
+        }
+
+        Cliente cliente = null;
+
+        if (identificador <= 0) {
+            return "redirect:/clientes";
+        }
+
+        cliente = clienteService.findOne(identificador);
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Cliente a Editar : {}", cliente.toString() );
+        }
+
+        if (cliente != null) {
+            modelMap.addAttribute("titulo", "Editar cliente");
+            modelMap.addAttribute("cliente", cliente);
+        }
+
+        return "form";
     }
 
 }
