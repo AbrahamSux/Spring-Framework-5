@@ -30,28 +30,34 @@
     <div class="container">
         <h1 class="text-primary" th:text="${titulo}"></h1>
 
-        <a class="btn btn-success btn-sm" th:href="@{/form}" th:text="'Crear Cliente'"></a>
+        <form th:action="@{/form}" th:object="${cliente}" method="POST">
+            <div>
+                <div> <input type="hidden" th:field="*{id}"> </div>
+            </div>
 
-        <table th:if="${not clientes.isEmpty()}">
-            <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido Paterno</th>
-                <th>Apellido Materno</th>
-                <th>E-mail</th>
-                <th>CreateAt</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each=" cliente : ${clientes}">
-                <td th:text="${cliente.nombre}"></td>
-                <td th:text="${cliente.apellidoPaterno}"></td>
-                <td th:text="${cliente.apellidoMaterno}"></td>
-                <td th:text="${cliente.email}"></td>
-                <td th:text="${cliente.createAt}"></td>
-            </tr>
-            </tbody>
-        </table>
+            <table>
+                <tr>
+                    <td>Nombre</td>
+                    <td><input type="text" th:field="*{nombre}"></td>
+                </tr>
+                <tr>
+                    <td>Apellido Paterno</td>
+                    <td><input type="text" th:field="*{apellidoPaterno}"></td>
+                </tr>
+                <tr>
+                    <td>Apellido Materno</td>
+                    <td><input type="text" th:field="*{apellidoMaterno}"></td>
+                </tr>
+                <tr>
+                    <td>E-mail</td>
+                    <td><input type="email" th:field="*{email}"></td>
+                </tr>
+                <tr>
+                    <td><input class="btn btn-primary" type="submit" value="Crear Cliente"></td>
+                </tr>
+            </table>
+        </form>
+
     </div>
 
     <!-- Popper and Bootstrap JS -->

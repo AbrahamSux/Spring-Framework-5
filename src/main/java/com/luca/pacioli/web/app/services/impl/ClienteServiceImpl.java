@@ -1,16 +1,16 @@
-package com.luca.pacioli.web.app.services.repository;
+package com.luca.pacioli.web.app.services.impl;
 
 import com.luca.pacioli.web.app.models.entity.Cliente;
 import com.luca.pacioli.web.app.services.ClienteService;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Repository("clienteRepository")
-public class ClienteRepository implements ClienteService {
+@Service("clienteServiceImpl")
+public class ClienteServiceImpl implements ClienteService {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -21,6 +21,12 @@ public class ClienteRepository implements ClienteService {
     @Override
     public List<Cliente> findAll() {
         return entityManager.createQuery("from Cliente").getResultList();
+    }
+
+    @Override
+    @Transactional
+    public void save(Cliente cliente) {
+        entityManager.persist(cliente);
     }
 
 }
