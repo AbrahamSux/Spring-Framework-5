@@ -35,27 +35,29 @@
                 <div> <input type="hidden" th:field="*{id}"> </div>
             </div>
 
-            <table>
-                <tr>
-                    <td>Nombre</td>
-                    <td><input type="text" th:field="*{nombre}"></td>
-                </tr>
-                <tr>
-                    <td>Apellido Paterno</td>
-                    <td><input type="text" th:field="*{apellidoPaterno}"></td>
-                </tr>
-                <tr>
-                    <td>Apellido Materno</td>
-                    <td><input type="text" th:field="*{apellidoMaterno}"></td>
-                </tr>
-                <tr>
-                    <td>E-mail</td>
-                    <td><input type="email" th:field="*{email}"></td>
-                </tr>
-                <tr>
-                    <td><input class="btn btn-primary" type="submit" value="Crear Cliente"></td>
-                </tr>
-            </table>
+            <div class="form-floating mb-3 col-sm-6">
+                <input type="text" class="form-control" id="idNombre" th:field="*{nombre}">
+                <label for="idNombre">Nombre</label>
+            </div>
+
+            <div class="form-floating mb-3 col-sm-6">
+                <input type="text" class="form-control" id="idApellidoPaterno" th:field="*{apellidoPaterno}">
+                <label for="idApellidoPaterno">Apellido Paterno</label>
+            </div>
+
+            <div class="form-floating mb-3 col-sm-6">
+                <input type="text" class="form-control" id="idApellidoMaterno" th:field="*{apellidoMaterno}">
+                <label for="idApellidoMaterno">Apellido Materno</label>
+            </div>
+
+            <div class="form-floating mb-3 col-sm-6">
+                <input type="email" class="form-control" id="idEmail" th:field="*{email}">
+                <label for="idEmail">Email address</label>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-success">Crear Cliente</button>
+            </div>
         </form>
 
     </div>
