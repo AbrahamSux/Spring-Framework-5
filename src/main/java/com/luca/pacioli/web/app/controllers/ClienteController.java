@@ -13,11 +13,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
+@SessionAttributes("cliente")
 public class ClienteController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClienteController.class);
@@ -69,7 +72,7 @@ public class ClienteController {
      * @return Redirecciona a la vista 'clientes'.
      */
     @RequestMapping(value = "/form", method = RequestMethod.POST)
-    public String guardarCliente(@Valid Cliente cliente, BindingResult result, Model model) {
+    public String guardarCliente(@Valid Cliente cliente, BindingResult result, Model model, SessionStatus status) {
 
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(">>> guardarCliente( {} )", cliente.toString() );
@@ -82,6 +85,9 @@ public class ClienteController {
         }
 
         clienteService.save(cliente);
+
+        // SE COMPLETA EL PROCESAMIENTO DE LA SESIÓN, LO QUE PERMITE LA LIMPIEZA DE LOS ATRIBUTOS DE LA SESIÓN.
+        status.setComplete();
 
         return "redirect:/clientes";
     }

@@ -38,9 +38,9 @@
         </div-->
 
         <form th:action="@{/form}" th:object="${cliente}" method="POST">
-            <div>
+            <!--div>
                 <div> <input type="hidden" th:field="*{id}"> </div>
-            </div>
+            </div-->
 
             <div class="form-floating mb-3 col-sm-6">
                 <input type="text" class="form-control" id="idNombre" th:field="*{nombre}" th:errorclass="'form-control alert-danger'">
