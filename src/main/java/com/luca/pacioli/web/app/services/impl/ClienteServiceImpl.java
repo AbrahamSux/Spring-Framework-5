@@ -1,7 +1,7 @@
 package com.luca.pacioli.web.app.services.impl;
 
 import com.luca.pacioli.web.app.models.entity.Cliente;
-import com.luca.pacioli.web.app.repository.ClienteRepository;
+import com.luca.pacioli.web.app.dao.ClienteDao;
 import com.luca.pacioli.web.app.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,36 +14,36 @@ import java.util.List;
 public class ClienteServiceImpl implements ClienteService {
 
     @Autowired
-    @Qualifier("clienteRepositoryImpl")
-    private ClienteRepository clienteRepository;
+    @Qualifier("clienteDaoImpl")
+    private ClienteDao clienteDao;
 
 
     @Override
     @Transactional(readOnly = true)
     public List<Cliente> findAll() {
 
-        return clienteRepository.findAll();
+        return clienteDao.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Cliente findOne(Long identificador) {
 
-        return clienteRepository.findOne(identificador);
+        return clienteDao.findOne(identificador);
     }
 
     @Override
     @Transactional
     public void save(Cliente cliente) {
 
-        clienteRepository.save(cliente);
+        clienteDao.save(cliente);
     }
 
     @Override
     @Transactional
     public void delete(Long identificador) {
 
-        clienteRepository.delete(identificador);
+        clienteDao.delete(identificador);
     }
 
 }

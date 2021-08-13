@@ -1,10 +1,10 @@
-package com.luca.pacioli.web.app.repository;
+package com.luca.pacioli.web.app.dao;
 
 import com.luca.pacioli.web.app.models.entity.Cliente;
 
 import java.util.List;
 
-public interface ClienteRepository {
+public interface ClienteDao {
 
     /**
      * Método encargado de consultar la lista con todos los clientes.

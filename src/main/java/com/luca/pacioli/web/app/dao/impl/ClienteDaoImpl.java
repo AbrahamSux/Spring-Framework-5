@@ -1,15 +1,15 @@
-package com.luca.pacioli.web.app.repository.impl;
+package com.luca.pacioli.web.app.dao.impl;
 
 import com.luca.pacioli.web.app.models.entity.Cliente;
-import com.luca.pacioli.web.app.repository.ClienteRepository;
+import com.luca.pacioli.web.app.dao.ClienteDao;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Repository("clienteRepositoryImpl")
-public class ClienteRepositoryImpl implements ClienteRepository {
+@Repository("clienteDaoImpl")
+public class ClienteDaoImpl implements ClienteDao {
 
     @PersistenceContext
     private EntityManager entityManager;
