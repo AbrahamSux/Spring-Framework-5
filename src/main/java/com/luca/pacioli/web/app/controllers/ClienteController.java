@@ -119,4 +119,18 @@ public class ClienteController {
         return "form";
     }
 
+    @RequestMapping(value = "/eliminar/{id}", method = RequestMethod.GET)
+    public String eliminarCliente(@PathVariable(value = "id") Long identificador) {
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">>> eliminarCliente( {} )", identificador );
+        }
+
+        if (identificador > 0) {
+            clienteService.delete(identificador);
+        }
+
+        return "redirect:/clientes";
+    }
+
 }

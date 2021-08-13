@@ -25,10 +25,17 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Cliente findOne(Long identificador) {
+
+        return entityManager.find(Cliente.class, identificador);
+    }
+
+    @Override
     @Transactional
     public void save(Cliente cliente) {
 
-        // SI EL CLIENTE NO ES NULO Y EL IDENTIFICADOR ES MAYOR A CERO, ENTONCES, ACTUALIZAMOS LOS DATOS.
+        // SI EL IDENTIFICADOR DEL CLIENTE NO ES NULO Y ES MAYOR A CERO, ENTONCES, ACTUALIZAMOS LOS DATOS.
         if (cliente.getId() != null && cliente.getId() > 0) {
             entityManager.merge(cliente);
         }
@@ -39,9 +46,17 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Cliente findOne(Long identificador) {
+    @Transactional
+    public void delete(Long identificador) {
+        Cliente cliente = null;
 
-        return entityManager.find(Cliente.class, identificador);
+        if (identificador > 0) {
+            cliente = findOne(identificador);
+        }
+
+        if (cliente != null) {
+            entityManager.remove(cliente);
+        }
     }
 
 }
