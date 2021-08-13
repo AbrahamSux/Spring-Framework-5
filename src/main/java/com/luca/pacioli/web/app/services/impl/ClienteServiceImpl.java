@@ -1,62 +1,49 @@
 package com.luca.pacioli.web.app.services.impl;
 
 import com.luca.pacioli.web.app.models.entity.Cliente;
+import com.luca.pacioli.web.app.repository.ClienteRepository;
 import com.luca.pacioli.web.app.services.ClienteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service("clienteServiceImpl")
 public class ClienteServiceImpl implements ClienteService {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Autowired
+    @Qualifier("clienteRepositoryImpl")
+    private ClienteRepository clienteRepository;
 
 
-
-    @Transactional(readOnly = true)
     @Override
+    @Transactional(readOnly = true)
     public List<Cliente> findAll() {
 
-        return entityManager.createQuery("from Cliente").getResultList();
+        return clienteRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Cliente findOne(Long identificador) {
 
-        return entityManager.find(Cliente.class, identificador);
+        return clienteRepository.findOne(identificador);
     }
 
     @Override
     @Transactional
     public void save(Cliente cliente) {
 
-        // SI EL IDENTIFICADOR DEL CLIENTE NO ES NULO Y ES MAYOR A CERO, ENTONCES, ACTUALIZAMOS LOS DATOS.
-        if (cliente.getId() != null && cliente.getId() > 0) {
-            entityManager.merge(cliente);
-        }
-        else {
-            // SE CREA/GUARDA UN NUEVO CLIENTE.
-            entityManager.persist(cliente);
-        }
+        clienteRepository.save(cliente);
     }
 
     @Override
     @Transactional
     public void delete(Long identificador) {
-        Cliente cliente = null;
 
-        if (identificador > 0) {
-            cliente = findOne(identificador);
-        }
-
-        if (cliente != null) {
-            entityManager.remove(cliente);
-        }
+        clienteRepository.delete(identificador);
     }
 
 }

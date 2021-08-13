@@ -1,20 +1,20 @@
-package com.luca.pacioli.web.app.services;
+package com.luca.pacioli.web.app.repository;
 
 import com.luca.pacioli.web.app.models.entity.Cliente;
 
 import java.util.List;
 
-public interface ClienteService {
+public interface ClienteRepository {
 
     /**
-     * Método encargado de regresar una lista de todos los clientes.
+     * Método encargado de consultar la lista con todos los clientes.
      *
      * @return Lista de todos los cientes.
      */
     public List<Cliente> findAll();
 
     /**
-     * Método encargado de ir a buscar el cliente correspondiente al identificador recibido.
+     * Método encargado de buscar el cliente correspondiente al identificador recibido.
      *
      * @param identificador Identificador del cliente.
      * @return El cliente correspondiente al identificador.
@@ -22,14 +22,14 @@ public interface ClienteService {
     public Cliente findOne(Long identificador);
 
     /**
-     * Método encargado de ir a guardar/editar el cliente recibido.
+     * Método encargado de guardar/editar el cliente recibido.
      *
      * @param cliente Cliente a editar/guardar.
      */
     public void save(Cliente cliente);
 
     /**
-     * Método encargado de ir a eliminar el cliente correspondiente al identificador recibido.
+     * Método encargado de eliminar el cliente correspondiente al identificador recibido.
      *
      * @param identificador Identificador del cliente.
      */
