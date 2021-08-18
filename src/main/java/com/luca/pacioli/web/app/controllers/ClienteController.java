@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Map;
@@ -72,7 +73,8 @@ public class ClienteController {
      * @return Redirecciona a la vista 'clientes'.
      */
     @RequestMapping(value = "/form", method = RequestMethod.POST)
-    public String guardarCliente(@Valid Cliente cliente, BindingResult result, Model model, SessionStatus status) {
+    public String guardarCliente(@Valid Cliente cliente, BindingResult result, Model model, RedirectAttributes flash,
+                                 SessionStatus status) {
 
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(">>> guardarCliente( {} )", cliente.toString() );
@@ -84,16 +86,21 @@ public class ClienteController {
             return "form";
         }
 
+        String messageFlash = ((cliente.getId() == null)? "Cliente creado existosamente!" : "Cliente editado existosamente!");
+
         clienteService.save(cliente);
 
         // SE COMPLETA EL PROCESAMIENTO DE LA SESIÓN, LO QUE PERMITE LA LIMPIEZA DE LOS ATRIBUTOS DE LA SESIÓN.
         status.setComplete();
 
+        // Flash Messenger
+        flash.addFlashAttribute("success", messageFlash);
+
         return "redirect:/clientes";
     }
 
     @RequestMapping(value = "/form/{id}", method = RequestMethod.GET)
-    public String editarCliente(@PathVariable(value = "id") Long identificador, ModelMap modelMap) {
+    public String editarCliente(@PathVariable(value = "id") Long identificador, ModelMap modelMap, RedirectAttributes flash) {
 
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(">>> editarCliente( {} )", identificador );
@@ -102,33 +109,44 @@ public class ClienteController {
         Cliente cliente = null;
 
         if (identificador <= 0) {
+            flash.addFlashAttribute("danger", "El identificador no es válido, ID : " + identificador);
+
             return "redirect:/clientes";
         }
 
         cliente = clienteService.findOne(identificador);
 
         if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("Cliente a Editar : {}", cliente.toString() );
+            LOGGER.info("Cliente a Editar : {}", ((cliente != null) ? cliente.toString() : "NULL") );
         }
 
         if (cliente != null) {
             modelMap.addAttribute("titulo", "Editar cliente");
             modelMap.addAttribute("cliente", cliente);
+        } else {
+            flash.addFlashAttribute("danger", "Falló al momento de buscar al cliente con ID : " + identificador);
+
+            return "redirect:/clientes";
         }
 
         return "form";
     }
 
     @RequestMapping(value = "/eliminar/{id}", method = RequestMethod.GET)
-    public String eliminarCliente(@PathVariable(value = "id") Long identificador) {
+    public String eliminarCliente(@PathVariable(value = "id") Long identificador, RedirectAttributes flash) {
 
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(">>> eliminarCliente( {} )", identificador );
         }
 
-        if (identificador > 0) {
-            clienteService.delete(identificador);
+        if (identificador <= 0) {
+            return "redirect:/clientes";
         }
+
+        clienteService.delete(identificador);
+
+        // Flash Messenger
+        flash.addFlashAttribute("success", "Cliente eliminado existosamente!");
 
         return "redirect:/clientes";
     }
