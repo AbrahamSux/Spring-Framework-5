@@ -8,63 +8,70 @@
     <!-- PLANTILLA PARA MOSTRAR EL 'HEADER' -->
     <header th:replace="plantillas/layoutPrincipal :: headerPrincipal"></header>
 
-    <div class="container">
-        <h1 class="text-primary" th:text="${titulo}"></h1>
+    <div class="container py-3">
+        <div class="card">
 
-        <!-- OPTIONAL: en caso de querer mostrar todos los errores en la parte superior mediante una alerta -->
-        <!--div th:object="${cliente}" th:remove="tag">
-            <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-                <li th:each="errorFiel: ${#fields.errors('*')}" th:text="${errorFiel}"></li>
-            </ul>
-        </div-->
+            <div class="card-header text-primary" th:text="${titulo}"></div>
 
-        <form th:action="@{/form}" th:object="${cliente}" method="POST">
-            <!--div>
-                <div> <input type="hidden" th:field="*{id}"> </div>
-            </div-->
+            <div class="card-body">
 
-            <div class="form-floating mb-3 col-sm-6">
-                <input type="text" class="form-control" id="idNombre" th:field="*{nombre}" th:errorclass="'form-control alert-danger'">
-                <label for="idNombre">Nombre</label>
+                <!-- OPTIONAL: en caso de querer mostrar todos los errores en la parte superior mediante una alerta -->
+                <!--div th:object="${cliente}" th:remove="tag">
+                    <ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                        <li th:each="errorFiel: ${#fields.errors('*')}" th:text="${errorFiel}"></li>
+                    </ul>
+                </div-->
 
-                <small th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="form-text text-danger"></small>
+                <form th:action="@{/form}" th:object="${cliente}" method="POST">
+                    <!--div>
+                        <div> <input type="hidden" th:field="*{id}"> </div>
+                    </div-->
+
+                    <div class="form-floating mb-3 col-sm-6">
+                        <input type="text" class="form-control" id="idNombre" th:field="*{nombre}" th:errorclass="'form-control alert-danger'">
+                        <label for="idNombre">Nombre</label>
+
+                        <small th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="form-text text-danger"></small>
+                    </div>
+
+                    <div class="form-floating mb-3 col-sm-6">
+                        <input type="text" class="form-control" id="idApellidoPaterno" th:field="*{apellidoPaterno}" th:errorclass="'form-control alert-danger'">
+                        <label for="idApellidoPaterno">Apellido Paterno</label>
+
+                        <small th:if="${#fields.hasErrors('apellidoPaterno')}" th:errors="*{apellidoPaterno}" class="form-text text-danger"></small>
+                    </div>
+
+                    <div class="form-floating mb-3 col-sm-6">
+                        <input type="text" class="form-control" id="idApellidoMaterno" th:field="*{apellidoMaterno}" th:errorclass="'form-control alert-danger'">
+                        <label for="idApellidoMaterno">Apellido Materno</label>
+
+                        <small th:if="${#fields.hasErrors('apellidoMaterno')}" th:errors="*{apellidoMaterno}" class="form-text text-danger"></small>
+                    </div>
+
+                    <div class="form-floating mb-3 col-sm-6">
+                        <input type="text" class="form-control" id="idEmail" th:field="*{email}" th:errorclass="'form-control alert-danger'">
+                        <label for="idEmail">Email address</label>
+
+                        <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="form-text text-danger"></small>
+                    </div>
+
+                    <div class="mb-3 col-sm-3">
+                        <label class="form-label" for="IdFechaNacimiento">Fecha de creación</label>
+                        <div>
+                            <input type="date" class="form-control" id="IdFechaNacimiento" th:field="*{createAt}" >
+                        </div>
+
+                        <small th:if="${#fields.hasErrors('createAt')}" th:errors="*{createAt}" class="form-text text-danger"></small>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+
             </div>
 
-            <div class="form-floating mb-3 col-sm-6">
-                <input type="text" class="form-control" id="idApellidoPaterno" th:field="*{apellidoPaterno}" th:errorclass="'form-control alert-danger'">
-                <label for="idApellidoPaterno">Apellido Paterno</label>
-
-                <small th:if="${#fields.hasErrors('apellidoPaterno')}" th:errors="*{apellidoPaterno}" class="form-text text-danger"></small>
-            </div>
-
-            <div class="form-floating mb-3 col-sm-6">
-                <input type="text" class="form-control" id="idApellidoMaterno" th:field="*{apellidoMaterno}" th:errorclass="'form-control alert-danger'">
-                <label for="idApellidoMaterno">Apellido Materno</label>
-
-                <small th:if="${#fields.hasErrors('apellidoMaterno')}" th:errors="*{apellidoMaterno}" class="form-text text-danger"></small>
-            </div>
-
-            <div class="form-floating mb-3 col-sm-6">
-                <input type="text" class="form-control" id="idEmail" th:field="*{email}" th:errorclass="'form-control alert-danger'">
-                <label for="idEmail">Email address</label>
-
-                <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="form-text text-danger"></small>
-            </div>
-
-            <div class="mb-3 col-sm-3">
-                <label class="form-label" for="IdFechaNacimiento">Fecha de creación</label>
-                <div>
-                    <input type="date" class="form-control" id="IdFechaNacimiento" th:field="*{createAt}" >
-                </div>
-
-                <small th:if="${#fields.hasErrors('createAt')}" th:errors="*{createAt}" class="form-text text-danger"></small>
-            </div>
-
-            <div>
-                <button type="submit" class="btn btn-primary">Guardar</button>
-            </div>
-        </form>
-
+        </div>
     </div>
 
     <br><br>
