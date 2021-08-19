@@ -6,6 +6,8 @@ import com.luca.pacioli.web.app.repository.ClienteRepository;
 import com.luca.pacioli.web.app.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,6 +62,13 @@ public class ClienteServiceImpl implements ClienteService {
         // clienteDao.delete(identificador);
 
         clienteRepository.deleteById(identificador);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Cliente> findAll(Pageable pageable) {
+
+        return clienteRepository.findAll(pageable);
     }
 
 }

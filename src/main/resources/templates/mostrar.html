@@ -22,6 +22,7 @@
                 <table th:if="${not clientes.isEmpty()}">
                     <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Nombre</th>
                         <th>Apellido Paterno</th>
                         <th>Apellido Materno</th>
@@ -33,6 +34,7 @@
                     </thead>
                     <tbody>
                     <tr th:each=" cliente : ${clientes}">
+                        <td th:text="${cliente.id}"></td>
                         <td th:text="${cliente.nombre}"></td>
                         <td th:text="${cliente.apellidoPaterno}"></td>
                         <td th:text="${cliente.apellidoMaterno}"></td>
@@ -46,6 +48,10 @@
                     </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <div class="card-footer text-muted">
+                <nav th:replace="paginator-nav :: paginator"></nav>
             </div>
 
         </div>
