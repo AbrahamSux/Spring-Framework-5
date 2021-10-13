@@ -20,10 +20,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @SessionAttributes("cliente")
@@ -94,8 +100,8 @@ public class ClienteController {
      * @return Redirecciona a la vista 'clientes'.
      */
     @RequestMapping(value = "/form", method = RequestMethod.POST)
-    public String guardarCliente(@Valid Cliente cliente, BindingResult result, Model model, RedirectAttributes flash,
-                                 SessionStatus status) {
+    public String guardarCliente(@Valid Cliente cliente, BindingResult result, Model model, @RequestParam("file") MultipartFile foto,
+                                 RedirectAttributes flash, SessionStatus status) {
 
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info(">>> guardarCliente( {} )", cliente.toString() );
@@ -105,6 +111,30 @@ public class ClienteController {
             model.addAttribute("titulo", "Formulario del cliente");
 
             return "form";
+        }
+
+        if (!foto.isEmpty()) {
+            try {
+                // OBTENEMOS LA RUTA DEL DIRECTORIO DE RECURSOS.
+                Path dirResources = Paths.get("src//main//resources//static/uploads");
+                String rootPath = dirResources.toFile().getAbsolutePath();
+
+                // OBTENEMOS LOS BYTES DE LA FOTO Y ARMAMOS LA RUTA COMPLETA PARA EL ARCHIVO.
+                byte [] bytes = foto.getBytes();
+                Path rutaCompleta = Paths.get(rootPath.concat("//").concat(Objects.requireNonNull(foto.getOriginalFilename())));
+
+                // CREAMOS Y ESCRIBIMOS LA IMAGEN/ARCHIVO.
+                Files.write(rutaCompleta, bytes);
+
+                // Flash Messenger
+                flash.addFlashAttribute("info", "La imagen { " + foto.getOriginalFilename() + " } se ha subido correctamente!");
+
+                cliente.setFoto(foto.getOriginalFilename());
+
+            } catch (IOException | NullPointerException e) {
+                flash.addFlashAttribute("danger", "Falló al momento de cargar el archivo!");
+                e.printStackTrace();
+            }
         }
 
         String messageFlash = ((cliente.getId() == null)? "Cliente creado existosamente!" : "Cliente editado existosamente!");

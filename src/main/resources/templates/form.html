@@ -22,7 +22,7 @@
                     </ul>
                 </div-->
 
-                <form th:action="@{/form}" th:object="${cliente}" method="POST">
+                <form th:action="@{/form}" th:object="${cliente}" method="POST" enctype="multipart/form-data">
                     <!--div>
                         <div> <input type="hidden" th:field="*{id}"> </div>
                     </div-->
@@ -62,6 +62,13 @@
                         </div>
 
                         <small th:if="${#fields.hasErrors('createAt')}" th:errors="*{createAt}" class="form-text text-danger"></small>
+                    </div>
+
+                    <div class="mb-3 col-sm-3">
+                        <label class="form-label" for="IdFoto">Foto</label>
+                        <div>
+                            <input type="file" class="form-control" id="IdFoto" name="file"  >
+                        </div>
                     </div>
 
                     <div>

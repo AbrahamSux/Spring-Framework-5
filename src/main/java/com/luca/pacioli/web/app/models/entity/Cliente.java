@@ -50,6 +50,8 @@ public class Cliente implements Serializable {
     @Past
     private Date createAt;
 
+    private String foto;
+
 
     /*@PrePersist
     public void rePersist() {
@@ -105,6 +107,14 @@ public class Cliente implements Serializable {
         this.createAt = createAt;
     }
 
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
     @Override
     public String toString() {
         return "Cliente{" +
@@ -114,6 +124,7 @@ public class Cliente implements Serializable {
                 ", apellidoMaterno='" + apellidoMaterno + '\'' +
                 ", email='" + email + '\'' +
                 ", createAt=" + createAt +
+                ", foto='" + foto + '\'' +
                 '}';
     }
 
