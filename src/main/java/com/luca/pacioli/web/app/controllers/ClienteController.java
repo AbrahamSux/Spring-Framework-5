@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 @Controller
 @SessionAttributes("cliente")
@@ -115,20 +116,24 @@ public class ClienteController {
 
         if (!foto.isEmpty()) {
             try {
-                // OBTENEMOS LA RUTA DEL DIRECTORIO DE RECURSOS.
-                String rootPath = "C://Temp//uploads";
+                String uniqueFileName = UUID.randomUUID().toString().concat("_").concat(Objects.requireNonNull(foto.getOriginalFilename()));
 
-                // OBTENEMOS LOS BYTES DE LA FOTO Y ARMAMOS LA RUTA COMPLETA PARA EL ARCHIVO.
-                byte [] bytes = foto.getBytes();
-                Path rutaCompleta = Paths.get(rootPath.concat("//").concat(Objects.requireNonNull(foto.getOriginalFilename())));
+                // OBTENEMOS LA RUTA DEL DIRECTORIO DE RECURSOS.
+                Path rootPath = Paths.get("uploads").resolve(uniqueFileName);
+                Path rootAbsolutePath = rootPath.toAbsolutePath();
+
+                if (LOGGER.isInfoEnabled()) {
+                    LOGGER.info("> rootPath ( {} )", rootPath);
+                    LOGGER.info("> rootAbsolutePath ( {} )", rootAbsolutePath);
+                }
 
                 // CREAMOS Y ESCRIBIMOS LA IMAGEN/ARCHIVO.
-                Files.write(rutaCompleta, bytes);
+                Files.copy(foto.getInputStream(), rootAbsolutePath);
 
                 // Flash Messenger
-                flash.addFlashAttribute("info", "La imagen { " + foto.getOriginalFilename() + " } se ha subido correctamente!");
+                flash.addFlashAttribute("info", "La imagen { " + uniqueFileName + " } se ha subido correctamente!");
 
-                cliente.setFoto(foto.getOriginalFilename());
+                cliente.setFoto(uniqueFileName);
 
             } catch (IOException | NullPointerException e) {
                 flash.addFlashAttribute("danger", "Falló al momento de cargar el archivo!");
@@ -204,6 +209,11 @@ public class ClienteController {
     @RequestMapping(value = "/mostrarCliente/{id}", method = RequestMethod.GET)
     public String mostrarCliente(@PathVariable(value = "id") Long identificador, Map<String, Object> model,
                                  RedirectAttributes flash) {
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">>> mostrarCliente( {} )", identificador);
+        }
+
         Cliente cliente = clienteService.findOne(identificador);
 
         if (cliente == null) {
