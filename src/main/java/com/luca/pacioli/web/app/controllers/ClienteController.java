@@ -116,8 +116,7 @@ public class ClienteController {
         if (!foto.isEmpty()) {
             try {
                 // OBTENEMOS LA RUTA DEL DIRECTORIO DE RECURSOS.
-                Path dirResources = Paths.get("src//main//resources//static/uploads");
-                String rootPath = dirResources.toFile().getAbsolutePath();
+                String rootPath = "C://Temp//uploads";
 
                 // OBTENEMOS LOS BYTES DE LA FOTO Y ARMAMOS LA RUTA COMPLETA PARA EL ARCHIVO.
                 byte [] bytes = foto.getBytes();
