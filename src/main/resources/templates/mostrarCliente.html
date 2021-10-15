@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<!-- PLANTILLA PARA MOSTRAR EL 'HEAD' -->
+<head th:replace="plantillas/layoutPrincipal :: headPrincipal"></head>
+<body>
+
+    <!-- PLANTILLA PARA MOSTRAR EL 'HEADER' -->
+    <header th:replace="plantillas/layoutPrincipal :: headerPrincipal"></header>
+
+    <div class="container py-3">
+        <div class="card">
+            <div class="card-header text-primary" th:text="${titulo}"></div>
+
+            <div class="card-body">
+
+                <img class="rounded float-start" th:if="${#strings.length(cliente.foto) > 0}"
+                     th:src="@{'/uploads/' + ${cliente.foto}}" th:alt="${cliente.foto}" style="width: 16rem;">
+
+                <ul class="list-group">
+                    <li class="list-group-item" th:text="${cliente.id}"></li>
+                    <li class="list-group-item" th:text="${cliente.nombre}"></li>
+                    <li class="list-group-item" th:text="${cliente.apellidoPaterno}"></li>
+                    <li class="list-group-item" th:text="${cliente.apellidoMaterno}"></li>
+                    <li class="list-group-item" th:text="${cliente.email}"></li>
+                    <li class="list-group-item" th:text="${cliente.createAt}"></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+
+    <!-- PLANTILLA PARA MOSTRAR EL 'FOOTER' -->
+    <footer th:replace="plantillas/layoutPrincipal :: footerPrincipal"></footer>
+
+</body>
+</html>

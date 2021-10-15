@@ -50,7 +50,7 @@ public class ClienteController {
      * @param model Modelo para pasar los datos a la vista.
      * @return Retorna la vista 'mostrar'.
      */
-    @RequestMapping(value = "/clientes", method = RequestMethod.GET)
+    @RequestMapping(value = {"/clientes", "/"}, method = RequestMethod.GET)
     public String listarClientes(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
 
         if (LOGGER.isInfoEnabled()) {
@@ -200,6 +200,26 @@ public class ClienteController {
         flash.addFlashAttribute("success", "Cliente eliminado existosamente!");
 
         return "redirect:/clientes";
+    }
+
+    @RequestMapping(value = "/mostrarCliente/{id}", method = RequestMethod.GET)
+    public String mostrarCliente(@PathVariable(value = "id") Long identificador, Map<String, Object> model,
+                                 RedirectAttributes flash) {
+        Cliente cliente = clienteService.findOne(identificador);
+
+        if (cliente == null) {
+            flash.addFlashAttribute("danger", "El cliente no existe en la base de datos!");
+            return "redirect:/clientes";
+        }
+
+        String nameClient = cliente.getNombre()
+                            .concat(" ").concat(cliente.getApellidoPaterno())
+                            .concat(" ").concat(cliente.getApellidoMaterno());
+
+        model.put("cliente", cliente);
+        model.put("titulo", "Detalle del cliente: " + nameClient);
+
+        return "mostrarCliente";
     }
 
 }

@@ -34,7 +34,9 @@
                     </thead>
                     <tbody>
                     <tr th:each=" cliente : ${clientes}">
-                        <td th:text="${cliente.id}"></td>
+                        <td>
+                            <a class="btn btn-link" th:href="@{/mostrarCliente/} + ${cliente.id} " th:text="${cliente.id}"></a>
+                        </td>
                         <td th:text="${cliente.nombre}"></td>
                         <td th:text="${cliente.apellidoPaterno}"></td>
                         <td th:text="${cliente.apellidoMaterno}"></td>
