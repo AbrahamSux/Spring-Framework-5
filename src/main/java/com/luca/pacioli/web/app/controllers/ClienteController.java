@@ -7,9 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -25,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -98,6 +103,11 @@ public class ClienteController {
      * Método encargado de guardar los datos mandados a través del fomulario.
      *
      * @param cliente Cliente a guardar.
+     * @param result Contiene el resultado de la validación y el enlace y contiene errores que pueden haber ocurrido.
+     * @param model Modelo para pasar los datos a la vista.
+     * @param foto Archivo multimedia cargado en el formulario.
+     * @param flash Almacena atributos flash y se propagarán automáticamente a la "salida" FlashMap de la solicitud actual.
+     * @param status Estatus de la sesión.
      * @return Redirecciona a la vista 'clientes'.
      */
     @RequestMapping(value = "/form", method = RequestMethod.POST)
@@ -131,6 +141,8 @@ public class ClienteController {
                 Files.copy(foto.getInputStream(), rootAbsolutePath);
 
                 // Flash Messenger
+                // Un FlashMap se guarda antes de la redirección (normalmente en la sesión) y está disponible después
+                // de la redirección y se elimina inmediatamente.
                 flash.addFlashAttribute("info", "La imagen { " + uniqueFileName + " } se ha subido correctamente!");
 
                 cliente.setFoto(uniqueFileName);
@@ -154,6 +166,14 @@ public class ClienteController {
         return "redirect:/clientes";
     }
 
+    /**
+     * Método encargado de mandar al formulario el cliente a editar correspondiente al identificador recibido.
+     *
+     * @param identificador Identificador del cliente.
+     * @param modelMap Modelo para pasar los datos a la vista.
+     * @param flash Almacena atributos flash y se propagarán automáticamente a la "salida" FlashMap de la solicitud actual.
+     * @return Retorna la vista 'form'.
+     */
     @RequestMapping(value = "/form/{id}", method = RequestMethod.GET)
     public String editarCliente(@PathVariable(value = "id") Long identificador, ModelMap modelMap, RedirectAttributes flash) {
 
@@ -187,6 +207,13 @@ public class ClienteController {
         return "form";
     }
 
+    /**
+     * Método encargado de eliminar el cliente correspondiente al identificador recibido.
+     *
+     * @param identificador Identificador del cliente.
+     * @param flash Almacena atributos flash y se propagarán automáticamente a la "salida" FlashMap de la solicitud actual.
+     * @return Redirecciona a la vista 'clientes'.
+     */
     @RequestMapping(value = "/eliminar/{id}", method = RequestMethod.GET)
     public String eliminarCliente(@PathVariable(value = "id") Long identificador, RedirectAttributes flash) {
 
@@ -206,6 +233,14 @@ public class ClienteController {
         return "redirect:/clientes";
     }
 
+    /**
+     * Método encargado de mostrar el cliente correspondiente al identificador recibido.
+     *
+     * @param identificador Identificador del Cliente.
+     * @param model Modelo para pasar los datos a la vista.
+     * @param flash Almacena atributos flash y se propagarán automáticamente a la "salida" FlashMap de la solicitud actual.
+     * @return Retorna la vista 'mostrarCliente'.
+     */
     @RequestMapping(value = "/mostrarCliente/{id}", method = RequestMethod.GET)
     public String mostrarCliente(@PathVariable(value = "id") Long identificador, Map<String, Object> model,
                                  RedirectAttributes flash) {
@@ -229,6 +264,34 @@ public class ClienteController {
         model.put("titulo", "Detalle del cliente: " + nameClient);
 
         return "mostrarCliente";
+    }
+
+    @RequestMapping(value = "/uploads/{filename:.+}", method = RequestMethod.GET)
+    public ResponseEntity<Resource> obtenerFoto(@PathVariable(value = "filename") String foto) {
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">>> obtenerFoto( {} )", foto);
+        }
+
+        Path pathFoto = Paths.get("uploads").resolve(foto).toAbsolutePath();
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("> pathFoto: " + pathFoto);
+        }
+
+        Resource resource = null;
+        try {
+            resource = new UrlResource(pathFoto.toUri());
+            if (!resource.exists() || !resource.isReadable()) {
+                throw new RuntimeException("Fallo al momento de cargar el archivo: " + pathFoto.toString());
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() +"\"")
+                .body(resource);
     }
 
 }
