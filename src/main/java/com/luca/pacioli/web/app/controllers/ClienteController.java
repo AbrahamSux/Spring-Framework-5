@@ -2,13 +2,13 @@ package com.luca.pacioli.web.app.controllers;
 
 import com.luca.pacioli.web.app.models.entity.Cliente;
 import com.luca.pacioli.web.app.services.ClienteService;
+import com.luca.pacioli.web.app.services.UploadFileService;
 import com.luca.pacioli.web.app.util.pageable.PageRender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,15 +28,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 @Controller
 @SessionAttributes("cliente")
@@ -48,6 +43,18 @@ public class ClienteController {
     @Autowired
     @Qualifier("clienteServiceImpl")
     private ClienteService clienteService;
+
+    @Autowired
+    @Qualifier("uploadFileServiceImpl")
+    private UploadFileService uploadFileService;
+
+
+    /**
+     * Constantes.
+     */
+    private static final String TITULO = "titulo";
+    private static final String CLIENTE = "cliente";
+    private static final String DANGER = "danger";
 
 
 
@@ -73,8 +80,7 @@ public class ClienteController {
         // PAGINADOR PARA LA VISTA.
         PageRender pageRender = new PageRender("/clientes", clientesPage);
 
-        model.addAttribute("titulo", "Listado de clientes");
-        // model.addAttribute("clientes", clienteService.findAll());
+        model.addAttribute(TITULO, "Listado de clientes");
         model.addAttribute("clientes", clientesPage);
         model.addAttribute("pageRender", pageRender);
 
@@ -94,8 +100,8 @@ public class ClienteController {
             LOGGER.info(">>> cargarFormularioCliente()");
         }
 
-        model.put("titulo", "Formulario del cliente");
-        model.put("cliente", new Cliente());
+        model.put(TITULO, "Formulario del cliente");
+        model.put(CLIENTE, new Cliente());
 
         return "form";
     }
@@ -120,36 +126,20 @@ public class ClienteController {
         }
 
         if (result.hasErrors()) {
-            model.addAttribute("titulo", "Formulario del cliente");
+            model.addAttribute(TITULO, "Formulario del cliente");
 
             return "form";
         }
 
-        if (cliente != null && cliente.getId() > 0 && cliente.getFoto().length() > 0) {
-            // OBTENEMOS EL ARCHIVO.
-            File archivo = obtenerArchivo(cliente.getId());
+        if (cliente.getId() != null && cliente.getId() > 0 && cliente.getFoto() != null &&  cliente.getFoto().length() > 0) {
+            boolean deleteFile =  uploadFileService.deleteFile(cliente.getFoto());
 
-            // SE ELIMINA EL ARCHIVO.
-            if (archivo.exists() && archivo.canRead()) {
-                archivo.delete();
-            }
+            LOGGER.info("> deleteFile : {}", deleteFile);
         }
 
         if (!foto.isEmpty()) {
             try {
-                String uniqueFileName = UUID.randomUUID().toString().concat("_").concat(Objects.requireNonNull(foto.getOriginalFilename()));
-
-                // OBTENEMOS LA RUTA DEL DIRECTORIO DE RECURSOS.
-                Path rootPath = Paths.get("uploads").resolve(uniqueFileName);
-                Path rootAbsolutePath = rootPath.toAbsolutePath();
-
-                if (LOGGER.isInfoEnabled()) {
-                    LOGGER.info("> rootPath ( {} )", rootPath);
-                    LOGGER.info("> rootAbsolutePath ( {} )", rootAbsolutePath);
-                }
-
-                // CREAMOS Y ESCRIBIMOS LA IMAGEN/ARCHIVO.
-                Files.copy(foto.getInputStream(), rootAbsolutePath);
+                String uniqueFileName = uploadFileService.copyFile(foto);
 
                 // Flash Messenger
                 // Un FlashMap se guarda antes de la redirección (normalmente en la sesión) y está disponible después
@@ -157,9 +147,8 @@ public class ClienteController {
                 flash.addFlashAttribute("info", "La imagen { " + uniqueFileName + " } se ha subido correctamente!");
 
                 cliente.setFoto(uniqueFileName);
-
-            } catch (IOException | NullPointerException e) {
-                flash.addFlashAttribute("danger", "Falló al momento de cargar el archivo!");
+            } catch (IOException e) {
+                flash.addFlashAttribute(DANGER, "Falló al momento de cargar el archivo!");
                 e.printStackTrace();
             }
         }
@@ -195,7 +184,7 @@ public class ClienteController {
         Cliente cliente = null;
 
         if (identificador <= 0) {
-            flash.addFlashAttribute("danger", "El identificador no es válido, ID : " + identificador);
+            flash.addFlashAttribute(DANGER, "El identificador no es válido, ID : " + identificador);
 
             return "redirect:/clientes";
         }
@@ -207,10 +196,10 @@ public class ClienteController {
         }
 
         if (cliente != null) {
-            modelMap.addAttribute("titulo", "Editar cliente");
-            modelMap.addAttribute("cliente", cliente);
+            modelMap.addAttribute(TITULO, "Editar cliente");
+            modelMap.addAttribute(CLIENTE, cliente);
         } else {
-            flash.addFlashAttribute("danger", "Falló al momento de buscar al cliente con ID : " + identificador);
+            flash.addFlashAttribute(DANGER, "Falló al momento de buscar al cliente con ID : " + identificador);
 
             return "redirect:/clientes";
         }
@@ -236,8 +225,10 @@ public class ClienteController {
             return "redirect:/clientes";
         }
 
-        // OBTENEMOS EL ARCHIVO.
-        File archivo = obtenerArchivo(identificador);
+        // RECUPERAMOS EL CLIENTE ANTES DE ELIMINARLO.
+        Cliente cliente = clienteService.findOne(identificador);
+
+        boolean deleteFile = uploadFileService.deleteFile(cliente.getFoto());
 
         // SE ELIMINA EL CLIENTE.
         clienteService.delete(identificador);
@@ -246,12 +237,10 @@ public class ClienteController {
         flash.addFlashAttribute("success", "Cliente eliminado existosamente!");
 
         // SE ELIMINA EL ARCHIVO.
-        if (archivo.exists() && archivo.canRead()) {
-            if(archivo.delete()) {
-                flash.addFlashAttribute("info", "Foto '" + archivo.getName() + "' eliminada correctamente.");
-            } else {
-                flash.addFlashAttribute("danger", "Falló al momento de eliminar la foto: " + archivo.getName());
-            }
+        if(deleteFile) {
+            flash.addFlashAttribute("info", "Foto '" + cliente.getFoto() + "' eliminada correctamente.");
+        } else {
+            flash.addFlashAttribute(DANGER, "Falló al momento de eliminar la foto: " + cliente.getFoto());
         }
 
         return "redirect:/clientes";
@@ -276,7 +265,7 @@ public class ClienteController {
         Cliente cliente = clienteService.findOne(identificador);
 
         if (cliente == null) {
-            flash.addFlashAttribute("danger", "El cliente no existe en la base de datos!");
+            flash.addFlashAttribute(DANGER, "El cliente no existe en la base de datos!");
             return "redirect:/clientes";
         }
 
@@ -284,8 +273,8 @@ public class ClienteController {
                             .concat(" ").concat(cliente.getApellidoPaterno())
                             .concat(" ").concat(cliente.getApellidoMaterno());
 
-        model.put("cliente", cliente);
-        model.put("titulo", "Detalle del cliente: " + nameClient);
+        model.put(CLIENTE, cliente);
+        model.put(TITULO, "Detalle del cliente: " + nameClient);
 
         return "mostrarCliente";
     }
@@ -303,36 +292,18 @@ public class ClienteController {
             LOGGER.info(">>> obtenerFoto( {} )", foto);
         }
 
-        Path pathFoto = Paths.get("uploads").resolve(foto).toAbsolutePath();
-
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("> pathFoto: " + pathFoto);
-        }
-
         Resource resource = null;
         try {
-            resource = new UrlResource(pathFoto.toUri());
-            if (!resource.exists() || !resource.isReadable()) {
-                throw new RuntimeException("Fallo al momento de cargar el archivo: " + pathFoto.toString());
-            }
+            resource = uploadFileService.loadFile(foto);
         } catch (MalformedURLException e) {
             e.printStackTrace();
+
+            throw new RuntimeException("Fallo al momento de cargar el archivo: " + foto);
         }
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + Objects.requireNonNull(resource).getFilename() +"\"")
                 .body(resource);
-    }
-
-    private File obtenerArchivo(Long identificador) {
-
-        // RECUPERAMOS EL CLIENTE ANTES DE ELIMINARLO.
-        Cliente cliente = clienteService.findOne(identificador);
-
-        // OBTENEMOS EL ARCHIVO A ELIMINAR.
-        Path rootPath = Paths.get("uploads").resolve(cliente.getFoto()).toAbsolutePath();
-
-        return rootPath.toFile();
     }
 
 }
