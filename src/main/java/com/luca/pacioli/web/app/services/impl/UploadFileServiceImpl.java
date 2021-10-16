@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -20,11 +21,45 @@ import java.util.UUID;
 @Service("uploadFileServiceImpl")
 public class UploadFileServiceImpl implements UploadFileService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(UploadFileServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UploadFileServiceImpl.class);
+
+
+    /**
+     * Constantes.
+     */
+    private static final String UPLOADS_FOLDER = "uploads";
 
 
 
     // MÉTODOS
+
+    @Override
+    public void deleteAll() {
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">>> INICIA EL PROCESO: deleteAll()");
+        }
+
+        FileSystemUtils.deleteRecursively(Paths.get(UPLOADS_FOLDER).toFile());
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("<<< TERMINA EL PROCESO: deleteAll()");
+        }
+    }
+
+    @Override
+    public void init() throws IOException {
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info(">>> INICIA EL PROCESO: init()");
+        }
+
+        Files.createDirectory(Paths.get(UPLOADS_FOLDER));
+
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("<<< TERMINA EL PROCESO: init()");
+        }
+    }
 
     @Override
     public Resource loadFile(String filename) throws MalformedURLException {
@@ -103,7 +138,7 @@ public class UploadFileServiceImpl implements UploadFileService {
 
     private Path getPath(String filename) {
 
-        return Paths.get("uploads").resolve(filename).toAbsolutePath();
+        return Paths.get(UPLOADS_FOLDER).resolve(filename).toAbsolutePath();
     }
 
 }

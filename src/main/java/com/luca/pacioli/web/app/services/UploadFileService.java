@@ -9,6 +9,18 @@ import java.net.MalformedURLException;
 public interface UploadFileService {
 
     /**
+     * Método utilizado para borrar el directorio completo de forma recursiva.
+     */
+    public void deleteAll();
+
+    /**
+     * Método encargado de crear el directorio de forma automática cada vez que arranca el proyecto.
+     *
+     * @throws IOException Si ocurre un error al momento de crear el directorio.
+     */
+    public void init() throws IOException;
+
+    /**
      * Método encargado de cargar/obtener la foto.
      *
      * @param filename Nombre del archivo/foto.
