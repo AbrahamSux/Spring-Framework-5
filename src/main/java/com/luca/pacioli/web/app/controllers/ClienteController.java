@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -122,6 +123,16 @@ public class ClienteController {
             model.addAttribute("titulo", "Formulario del cliente");
 
             return "form";
+        }
+
+        if (cliente != null && cliente.getId() > 0 && cliente.getFoto().length() > 0) {
+            // OBTENEMOS EL ARCHIVO.
+            File archivo = obtenerArchivo(cliente.getId());
+
+            // SE ELIMINA EL ARCHIVO.
+            if (archivo.exists() && archivo.canRead()) {
+                archivo.delete();
+            }
         }
 
         if (!foto.isEmpty()) {
@@ -225,10 +236,23 @@ public class ClienteController {
             return "redirect:/clientes";
         }
 
+        // OBTENEMOS EL ARCHIVO.
+        File archivo = obtenerArchivo(identificador);
+
+        // SE ELIMINA EL CLIENTE.
         clienteService.delete(identificador);
 
         // Flash Messenger
         flash.addFlashAttribute("success", "Cliente eliminado existosamente!");
+
+        // SE ELIMINA EL ARCHIVO.
+        if (archivo.exists() && archivo.canRead()) {
+            if(archivo.delete()) {
+                flash.addFlashAttribute("info", "Foto '" + archivo.getName() + "' eliminada correctamente.");
+            } else {
+                flash.addFlashAttribute("danger", "Falló al momento de eliminar la foto: " + archivo.getName());
+            }
+        }
 
         return "redirect:/clientes";
     }
@@ -266,6 +290,12 @@ public class ClienteController {
         return "mostrarCliente";
     }
 
+    /**
+     * Método encargado de obtener la foto correspondiente al cliente a mostrar.
+     *
+     * @param foto Foto del Cliente a mostrar.
+     * @return La ruta del recurso (Foto).
+     */
     @RequestMapping(value = "/uploads/{filename:.+}", method = RequestMethod.GET)
     public ResponseEntity<Resource> obtenerFoto(@PathVariable(value = "filename") String foto) {
 
@@ -290,8 +320,19 @@ public class ClienteController {
         }
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() +"\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + Objects.requireNonNull(resource).getFilename() +"\"")
                 .body(resource);
+    }
+
+    private File obtenerArchivo(Long identificador) {
+
+        // RECUPERAMOS EL CLIENTE ANTES DE ELIMINARLO.
+        Cliente cliente = clienteService.findOne(identificador);
+
+        // OBTENEMOS EL ARCHIVO A ELIMINAR.
+        Path rootPath = Paths.get("uploads").resolve(cliente.getFoto()).toAbsolutePath();
+
+        return rootPath.toFile();
     }
 
 }
