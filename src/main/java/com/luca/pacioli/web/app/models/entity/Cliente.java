@@ -3,10 +3,13 @@ package com.luca.pacioli.web.app.models.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -16,13 +19,16 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "clientes")
 public class Cliente implements Serializable {
 
-    //TODO: Agregar serialVersionUID.
+    private static final long serialVersionUID = -5491781178855740219L;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,12 +58,18 @@ public class Cliente implements Serializable {
 
     private String foto;
 
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Factura> facturas;
+
 
     /*@PrePersist
     public void rePersist() {
         this.createAt = new Date();
     }*/
 
+    public Cliente() {
+        this.facturas = new ArrayList<Factura>();
+    }
 
     public Long getId() {
         return id;
@@ -115,6 +127,20 @@ public class Cliente implements Serializable {
         this.foto = foto;
     }
 
+    public List<Factura> getFacturas() {
+        return facturas;
+    }
+
+    public void setFacturas(List<Factura> facturas) {
+        this.facturas = facturas;
+    }
+
+
+    public void addfactura(Factura factura) {
+        facturas.add(factura);
+    }
+
+
     @Override
     public String toString() {
         return "Cliente{" +
@@ -125,6 +151,7 @@ public class Cliente implements Serializable {
                 ", email='" + email + '\'' +
                 ", createAt=" + createAt +
                 ", foto='" + foto + '\'' +
+                ", facturas=" + facturas +
                 '}';
     }
 
