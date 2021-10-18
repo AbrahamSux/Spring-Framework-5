@@ -1,3 +1,6 @@
+/**
+ * orphanRemoval: es opcional, sirve para eliminar registros huérfanos que no están asociados a ningún cliente.
+ */
 package com.luca.pacioli.web.app.models.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -58,7 +61,7 @@ public class Cliente implements Serializable {
 
     private String foto;
 
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Factura> facturas;
 
 

@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "producto")
+@Table(name = "productos")
 public class Producto implements Serializable {
 
     private static final long serialVersionUID = -5764999940649816757L;

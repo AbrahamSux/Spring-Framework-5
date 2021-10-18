@@ -1,4 +1,4 @@
-
+/*Populate table clientes*/
 INSERT INTO clientes (nombre, apellido_paterno, apellido_materno, email, create_at, foto) VALUES('Diana', 'Camarillo', 'Neri', 'diana@gmail.com', '2021-08-11', '');
 INSERT INTO clientes (nombre, apellido_paterno, apellido_materno, email, create_at, foto) VALUES('Yelena', 'Juárez', 'Camarillo', 'yelena@gmail.com', '2021-08-15', '');
 INSERT INTO clientes (nombre, apellido_paterno, apellido_materno, email, create_at, foto) VALUES('Braulio', 'Chavez', 'Hernandez', 'chavez@gmail.com', '2021-08-01', '');
@@ -39,3 +39,13 @@ INSERT INTO clientes (nombre, apellido_paterno, apellido_materno, email, create_
 INSERT INTO clientes (nombre, apellido_paterno, apellido_materno, email, create_at, foto) VALUES('X', 'Juárez', 'de la Cruz', 'yoni-jc@gmail.com', '2021-08-03', '');
 INSERT INTO clientes (nombre, apellido_paterno, apellido_materno, email, create_at, foto) VALUES('Y', 'Juárez', 'de la Cruz', 'ernesto-jc@gmail.com', '2021-08-04', '');
 INSERT INTO clientes (nombre, apellido_paterno, apellido_materno, email, create_at, foto) VALUES('Z', 'Madero', 'Vizcaino', 'jose@gmail.com', '2021-08-05', '');
+
+/*Populate table clientes*/
+INSERT INTO productos (nombre, precio, create_at) VALUES ('Laptop Lenovo X1 Carbon', 38000, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('Samsung Monitor Gaming 49 Super UltraWide QLED', 22580, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('Apple 2020 MacBook Air Chip M1', 23400, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('HUAWEI Matepad T 10 - Tablet 9.7', 2999, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('Seagate STEA2000400 Expansion - Disco duro externo', 1400, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('Dell OptiPlex 3040 PC con factor de forma pequeño', 7700, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('Microsoft 365 Personal | Suscripción anual | Para 1', 880, NOW());
+INSERT INTO productos (nombre, precio, create_at) VALUES ('SAMSUNG Galaxy Tab S6 Lite 10.4 Pulgadas', 8500, NOW());

@@ -54,6 +54,7 @@ public class ItemFactura implements Serializable {
         return "ItemFactura{" +
                 "id=" + id +
                 ", cantidad=" + cantidad +
+                ", producto=" + producto +
                 '}';
     }
 
