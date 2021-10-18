@@ -111,6 +111,16 @@ public class Factura implements Serializable {
         this.itemFacturas.add(itemFactura);
     }
 
+    public Double getTotal() {
+        Double total = 0.0;
+
+        for (ItemFactura item : this.itemFacturas) {
+            total += item.calcularImporte();
+        }
+
+        return total;
+    }
+
 
     @Override
     public String toString() {
