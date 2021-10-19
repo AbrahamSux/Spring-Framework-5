@@ -49,3 +49,13 @@ INSERT INTO productos (nombre, precio, create_at) VALUES ('Seagate STEA2000400 E
 INSERT INTO productos (nombre, precio, create_at) VALUES ('Dell OptiPlex 3040 PC con factor de forma pequeño', 7700, NOW());
 INSERT INTO productos (nombre, precio, create_at) VALUES ('Microsoft 365 Personal | Suscripción anual | Para 1', 880, NOW());
 INSERT INTO productos (nombre, precio, create_at) VALUES ('SAMSUNG Galaxy Tab S6 Lite 10.4 Pulgadas', 8500, NOW());
+
+/*Creación de facturas*/
+INSERT INTO facturas (descripcion, observacion, create_at, cliente_id) VALUES ('Factura equipos de oficina', null, NOW(), 1);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (1, 1, 1);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (2, 1, 5);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (1, 1, 7);
+
+INSERT INTO facturas (descripcion, observacion, create_at, cliente_id) VALUES ('Factura equipos para personal', null, NOW(), 1);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (1, 2, 1);
+INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES (5, 2, 8);
